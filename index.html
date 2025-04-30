@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohammed Tijani - Data Science Portfolio</title>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root { --bg: #111; --text: #ddd; --accent: #00ffff; --secondary: #0088cc; --dark: #000; }
+    html { scroll-behavior: smooth; }
+    body { margin:0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    nav { position: fixed; top: 0; width: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; z-index: 100; padding: 1rem 0; backdrop-filter: blur(5px); }
+    nav a { margin: 0 1.5rem; color: var(--accent); text-decoration: none; opacity: 0.8; font-weight: 600; transition: all 0.3s ease; }
+    nav a:hover { opacity: 1; transform: translateY(-2px); }
+    header, section { padding: 6rem 2rem 4rem; min-height: auto; position: relative; display: flex; align-items: center; }
+    header { min-height: 100vh; }
+    .container { max-width: 1100px; margin: auto; width: 100%; }
+    .section-content { background: rgba(0,0,0,0.8); padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    h1, h2, h3 { color: var(--accent); margin-bottom: 1rem; }
+    h2 { font-size: 2.2rem; position: relative; padding-bottom: 0.5rem; }
+    h2:after { content: ''; position: absolute; bottom: 0; left: 0; width: 60px; height: 3px; background: var(--accent); }
+    h3 { font-size: 1.5rem; }
+    a.button { display: inline-block; padding: 0.8rem 1.5rem; border: 2px solid var(--accent); border-radius: 6px; color: var(--accent); text-decoration: none; margin-top: 1rem; font-size: 1rem; transition: all 0.3s ease; }
+    a.button:hover { background: var(--accent); color: var(--dark); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,255,255,0.3); }
+    footer { text-align: center; padding: 2rem 0; font-size: 0.9rem; }
+    input, textarea { width: 100%; padding: 0.8rem; margin-top: 0.5rem; background: #222; border: 1px solid #333; color: var(--text); border-radius: 6px; transition: all 0.3s ease; }
+    input:focus, textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 2px rgba(0,255,255,0.2); }
+    
+    /* Experience section styling */
+    .experience-item { margin-bottom: 2.5rem; padding: 1.5rem; background: rgba(20,20,20,0.7); border-radius: 8px; border-left: 3px solid var(--accent); transition: all 0.3s ease; }
+    .experience-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+    .experience-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .experience-title { margin: 0; }
+    .experience-date { font-size: 0.9rem; color: #aaa; padding: 0.3rem 0.6rem; background: rgba(0,0,0,0.3); border-radius: 4px; }
+    .experience-company { font-weight: normal; color: var(--accent); opacity: 0.8; }
+    .experience-tech { margin-top: 0.5rem; font-size: 0.85rem; color: #999; }
+    .experience-tech span { display: inline-block; margin-right: 0.5rem; padding: 0.2rem 0.5rem; background: rgba(0,136,204,0.2); border-radius: 3px; }
+    
+    /* Projects section styling */
+    .projects-container { position: relative; }
+    .project-slider { display: flex; overflow-x: hidden; scroll-behavior: smooth;}
+    .project-item { flex: 0 0 100%; padding: 1.5rem; transition: all 0.3s ease; }
+    .project-content { background: rgba(20,20,20,0.7); padding: 2rem; border-radius: 8px; height: 100%; border-top: 3px solid var(--secondary); }
+    .project-nav { display: flex; justify-content: center; margin-top: 2rem; }
+    .project-nav-btn { background: none; border: none; color: var(--accent); font-size: 1.5rem; cursor: pointer; margin: 0 0.5rem; opacity: 0.7; transition: all 0.3s ease; }
+    .project-nav-btn:hover { opacity: 1; transform: scale(1.2); }
+    .project-dots { display: flex; justify-content: center; margin-top: 1rem; }
+    .project-dot { width: 10px; height: 10px; border-radius: 50%; background: #444; margin: 0 5px; cursor: pointer; transition: all 0.3s ease; }
+    .project-dot.active { background: var(--accent); transform: scale(1.3); }
+    .project-tech { display: flex; flex-wrap: wrap; margin-top: 1rem; margin-bottom: 1rem; }
+    .project-tech span { display: inline-block; margin-right: 0.5rem; margin-bottom: 0.5rem; padding: 0.3rem 0.6rem; background: rgba(0,136,204,0.2); border-radius: 4px; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div id="tsparticles"></div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#resume">Resume</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header id="about">
+    <div class="container section-content">
+      <h1>Mohammed Tijani</h1>
+      <p>Undergraduate Research Assistant & aspiring Data Scientist skilled in Python, R, ML. Interested in transforming and predicting data.
+      </p>
+    </div>
+  </header>
+
+  <section id="experience">
+    <div class="container section-content">
+      <h2>Experience</h2>
+      
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="experience-title">Undergraduate Research Assistant <span class="experience-company">@ The Research Foundation for SUNY Albany</span></h3>
+          <span class="experience-date">March 2025 – Present</span>
+        </div>
+        <div class="experience-tech">
+          <span>Python</span>
+          <span>Pandas</span>
+          <span>NumPy</span>
+          <span>Matplotlib</span>
+          <span>scikit-learn</span>
+        </div>
+        <ul>
+          <li>Assist with the deployment, calibration, and maintenance of high-grade air quality instruments and low-cost sensor servicing.</li>
+          <li>Processed, cleaned, and validated large-scale air quality datasets, 16,000+ data points over 2 years to prepare data for analysis and modeling.</li>
+          <li>Developed Python scripts utilizing Pandas and Matplotlib to generate comparative data visualizations, such as customized box plots, for analyzing air quality trends and anomalies across different monitoring network types (e.g., NYC Mesonet, Micronet).</li>
+          <li>Engineered features (e.g., one-hot encoding for location/season) and trained a Random Forest Classifier model on extensive datasets (750,000+ data points) to predict pollutant types based on environmental and temporal features.</li>
+          <li>Analyzed and interpreted complex air quality data by creating statistical summaries (e.g., model performance metrics) and visualizations (e.g., classification heatmaps, feature importance plots) to identify patterns.</li>
+        </ul>
+      </div>
+      
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="experience-title">Math Teaching Assistant Intern <span class="experience-company">@ BEAM</span></h3>
+          <span class="experience-date">July 2024 – August 2024</span>
+        </div>
+        <ul>
+          <li>Mentored and guided 20+ middle school students through a "100 problem challenge," covering foundational and advanced mathematical concepts including Game Theory, Number Theory, and Combinatorics.</li>
+          <li>Designed and implemented hands-on teaching methods, utilizing physical objects and manipulatives, using blocks to model combinatorial possibilities, colored tokens for game theory payoffs, or demonstrating logic puzzles like the counterfeit coin problem with actual coins as class-wide visual aids to explain abstract concepts.</li>
+          <li>Developed interactive, real-world lesson plans to enhance comprehension and engagement.</li>
+          <li>Employed visual aids and concrete representations to simplify complex topics.</li>
+        </ul>
+      </div>
+      
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="experience-title">Development Lead <span class="experience-company">@ Flash Application</span></h3>
+          <span class="experience-date">March 2019 – August 2022</span>
+        </div>
+        <div class="experience-tech">
+          <span>.NET</span>
+          <span>C#</span>
+          <span>Java</span>
+          <span>Redis</span>
+          <span>MySQL</span>
+          <span>Git</span>
+        </div>
+        <ul>
+          <li>Developed and launched a flash game, building a community on social applications of 5,500 members over 3 years.</li>
+          <li>Led a team of 4 developers and 5 artists to release frequent updates and design new mechanics (e.g., Projectile Ricochet, Community Market, Battle Pass, Global raids) to meet player base demands.</li>
+          <li>Migrated the database of 5000+ players from MySQL to Redis, leveraging the in-memory storage and data structures to make the query time up to 4 times faster, offering a smoother gameplay experience at a cheaper cost.</li>
+          <li>Managed a team of 20+ members, improving cross-functional communication and data accessibility by implementing data replication and synchronization between European and U.S. servers (enabling real-time updates/collaboration), and organizing team tasks using Discord and GitHub for enhanced visibility.</li>
+          <li>Achieving 15-35% monthly player growth consistently over a year, generated $10K in annual revenue, and drove a game runtime of 99.8%.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container section-content">
+      <h2>Projects</h2>
+      
+      <div class="projects-container">
+        <div class="project-slider">
+          <div class="project-item" id="project1">
+            <div class="project-content">
+              <h3>CGM Application</h3>
+              <div class="project-tech">
+                <span>JavaScript</span>
+                <span>Expo</span>
+                <span>Python</span>
+                <span>Tableau Public</span>
+                <span>NumPy</span>
+                <span>Pandas</span>
+                <span>Git</span>
+                <span>React</span>
+              </div>
+              <ul>
+                <li>Identified a growing need for proactive diabetes management tools that not only monitor but also predict glucose fluctuations.</li>
+                <li>Trained a Machine Learning model using the Deep Forest algorithm in Python on historical time-series glucose level data (14M+ data points from 400+ individuals), leveraging university high-performance computing resources to generate predictive insights (e.g., caution alerts).</li>
+                <li>Designed and delivered a Continuous Glucose Monitoring (CGM) application with real-time glucose monitoring by integrating various user health inputs (e.g., meal logs, activity data), a predictive tool analyzing trends every 5 minutes via server API calls, and data visualizations (e.g., glucose trend graphs using Tableau Public and react-native-chart, predictive alerts for potentially abnormal levels) to empower end-users.</li>
+                <li>Built a cross-platform mobile app for real-time glucose monitoring using Expo & React.</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="project-item" id="project2">
+            <div class="project-content">
+              <h3>MORDLE Bot</h3>
+              <div class="project-tech">
+                <span>Python</span>
+                <span>scikit-learn</span>
+                <span>Tkinter</span>
+                <span>PIL</span>
+                <span>Machine Learning</span>
+              </div>
+              <ul>
+                <li>Designed ML pipeline with custom encoding to predict optimal Wordle guesses.</li>
+                <li>Automated 100K+ game simulations; achieved average of 4.2 guesses per word.</li>
+                <li>Implemented Random Forest Classifier in scikit-learn, reaching 93% predictive accuracy.</li>
+                <li>Developed Tkinter GUI & PIL image feedback loop for intuitive user interaction.</li>
+                <li>Created a sophisticated algorithm that analyzes letter frequency and position patterns to optimize word selection strategy.</li>
+                <li>Implemented a feedback system that learns from previous guesses to improve future performance.</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="project-item" id="project3">
+            <div class="project-content">
+              <h3>YRBIS Business App</h3>
+              <div class="project-tech">
+                <span>JavaScript</span>
+                <span>Expo</span>
+                <span>AWS</span>
+                <span>OpenAI</span>
+                <span>Git</span>
+                <span>React</span>
+                <span>DynamoDB</span>
+              </div>
+              <ul>
+                <li>Identified a need for small business promotion, leading to the creation of a full-scale Android/iOS application (using React Native/Expo) to address the need for increased small business visibility and streamline the business creation experience by enabling users to post and promote their businesses.</li>
+                <li>Designed and implemented key features including secure user authentication for onboarding, AI-assisted business description crafting and tag generation alongside location fetching/display for post creation, and automated content appropriateness checks (OpenAI API) for content moderation to simplify user workflows and ensure platform integrity.</li>
+                <li>Streamlined the business creation experience and demonstrated scalable mobile app architecture with an AI-enhanced user interface, utilizing AWS DynamoDB for backend data storage.</li>
+                <li>Enhanced UX with intuitive UI and real-time feedback on content quality.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="project-nav">
+          <button class="project-nav-btn" id="prevProject">&#10094;</button>
+          <button class="project-nav-btn" id="nextProject">&#10095;</button>
+        </div>
+        
+        <div class="project-dots">
+          <span class="project-dot active" data-index="0"></span>
+          <span class="project-dot" data-index="1"></span>
+          <span class="project-dot" data-index="2"></span>
+        </div>
+      </div>
+      
+      <canvas id="projectChart" width="400" height="200" style="margin-top: 2rem;"></canvas>
+    </div>
+  </section>
+
+  <section id="resume">
+    <div class="container section-content">
+      <h2>Resume</h2>
+      <iframe src="Mohammed_Tijani_Resume.pdf" width="100%" height="600px" style="border:none;"></iframe>
+      <a class="button" href="Mohammed_Tijani_Resume.pdf" download>Download PDF</a>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container section-content">
+      <h2>Contact</h2>
+      <form action="mailto:mohammedtjay@gmail.com" method="post" enctype="text/plain">
+        <label>Name</label><input type="text" name="Name" required>
+        <label>Email</label><input type="email" name="Email" required>
+        <label>Message</label><textarea name="Message" rows="5" required></textarea>
+        <button type="submit" class="button">Send</button>
+      </form>
+      <p><a href="https://linkedin.com/in/mtjani" style="color:var(--accent);" target="_blank">LinkedIn</a> | <a href="https://github.com/motijani" target="_blank" style="color:var(--accent);">GitHub</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Mohammed Tijani</p>
+  </footer>
+
+  <script>
+    // Enhanced particles
+    tsParticles.load('tsparticles', {
+      particles: {
+        number: { value: 30 },
+        color: { value: "#00ffff" },
+        shape: { type: 'circle' },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        move: { 
+          enable: true, 
+          speed: 1.5, 
+          direction: "none", 
+          random: true, 
+          straight: false, 
+          outMode: "bounce",
+          bounce: true 
+        },
+        collisions: { enable: true }
+      },
+      interactivity: {
+        detectsOn: "canvas",
+        events: { 
+          onhover: { enable: true, mode: 'grab' }, 
+          onclick: { enable: true, mode: 'push' } 
+        },
+        modes: { 
+          grab: { distance: 180, lineLinked: { opacity: 0.8 } }, 
+          push: { quantity: 4 } 
+        }
+      },
+      retina_detect: true
+    });
+
+    // Improved project features chart
+    const ctx = document.getElementById('projectChart').getContext('2d');
+    new Chart(ctx, { 
+      type: 'radar', 
+      data: {
+        labels: ['Data Processing', 'UI/UX', 'Machine Learning', 'API Integration', 'Cloud Services'],
+        datasets: [
+          { 
+            label: 'CGM App', 
+            data: [9, 8, 9, 7, 6],
+            backgroundColor: 'rgba(0, 255, 255, 0.2)',
+            borderColor: 'rgba(0, 255, 255, 0.8)',
+            pointBackgroundColor: 'rgba(0, 255, 255, 1)',
+            pointBorderColor: '#fff'
+          },
+          { 
+            label: 'MORDLE', 
+            data: [7, 6, 9, 4, 3],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 0.8)',
+            pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+            pointBorderColor: '#fff'
+          },
+          { 
+            label: 'YRBIS', 
+            data: [6, 9, 7, 8, 9],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 0.8)',
+            pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+            pointBorderColor: '#fff'
+          }
+        ]
+      }, 
+      options: { 
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+          r: {
+            angleLines: {
+              color: 'rgba(255, 255, 255, 0.2)'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.2)'
+            },
+            pointLabels: {
+              color: '#ddd'
+            },
+            ticks: {
+              backdropColor: 'transparent',
+              color: '#ddd'
+            }
+          }
+        }
+      }
+    });
+
+    // Project slider functionality - wrapped in DOMContentLoaded to ensure elements exist
+    document.addEventListener('DOMContentLoaded', () => {
+      const slider = document.querySelector('.project-slider');
+      const items = document.querySelectorAll('.project-item');
+      const dots = document.querySelectorAll('.project-dot');
+      let currentIndex = 0;
+      const totalProjects = items.length;
+
+      // Set fixed width for project items to ensure proper slider functionality
+      items.forEach(item => {
+        item.style.width = slider.clientWidth + 'px';
+      });
+
+      function goToProject(index) {
+        if (index < 0) index = totalProjects - 1;
+        if (index >= totalProjects) index = 0;
+        
+        slider.scrollTo({
+          left: items[index].offsetLeft,
+          behavior: 'smooth'
+        });
+        
+        currentIndex = index;
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+          if (i === currentIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+
+      // Initialize the slider
+      goToProject(0);
+
+      document.getElementById('nextProject').addEventListener('click', () => {
+        goToProject(currentIndex + 1);
+      });
+
+      document.getElementById('prevProject').addEventListener('click', () => {
+        goToProject(currentIndex - 1);
+      });
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const index = parseInt(dot.getAttribute('data-index'));
+          goToProject(index);
+        });
+      });
+
+      // Handle window resize to maintain proper slider functionality
+      window.addEventListener('resize', () => {
+        items.forEach(item => {
+          item.style.width = slider.clientWidth + 'px';
+        });
+        goToProject(currentIndex);
+      });
+    });
+
+    // Smooth scroll and navigation - wrapped in DOMContentLoaded to ensure elements exist
+    document.addEventListener('DOMContentLoaded', () => {
+      // Smooth scroll on nav clicks with enhanced animation
+      document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop,
+              behavior: 'smooth'
+            });
+            
+            // Highlight current section in nav
+            document.querySelectorAll('nav a').forEach(navLink => {
+              navLink.style.opacity = '0.8';
+              navLink.style.transform = 'translateY(0)';
+            });
+            
+            link.style.opacity = '1';
+            link.style.transform = 'translateY(-2px)';
+          }
+        });
+      });
+
+      // Scroll spy to highlight current section in navigation
+      function updateNavHighlight() {
+        const scrollPosition = window.scrollY;
+        
+        // Include header in the sections to check
+        const sections = [...document.querySelectorAll('section'), document.querySelector('header')];
+        
+        sections.forEach(section => {
+          if (!section) return;
+          
+          const sectionTop = section.offsetTop - 100;
+          const sectionBottom = sectionTop + section.offsetHeight;
+          
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            const currentId = section.getAttribute('id');
+            document.querySelectorAll('nav a').forEach(navLink => {
+              navLink.style.opacity = '0.8';
+              navLink.style.transform = 'translateY(0)';
+              
+              if (navLink.getAttribute('href') === `#${currentId}`) {
+                navLink.style.opacity = '1';
+                navLink.style.transform = 'translateY(-2px)';
+              }
+            });
+          }
+        });
+      }
+      
+      // Initial highlight
+      updateNavHighlight();
+      
+      // Update on scroll
+      window.addEventListener('scroll', updateNavHighlight);
+    });
+  </script>
+</body>
+</html>
