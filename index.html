@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,290 +8,426 @@
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    /* CSS Variables for theming */
     :root {
-      --bg: #111;
-      --text: #ddd;
-      --accent: #00ffff; /* Cyan accent */
-      --secondary: #0088cc; /* Blue secondary */
-      --dark: #000;
+      --bg-gradient: linear-gradient(135deg, #101c2c 0%, #1a3a4d 100%);
+      --glass-bg: rgba(20, 30, 40, 0.65);
+      --glass-blur: blur(12px);
+      --accent-gradient: linear-gradient(90deg, #00fff0 0%, #0088cc 100%);
+      --accent: #00fff0;
+      --accent2: #0088cc;
+      --text: #eaf6fb;
+      --text-secondary: #b6c9d6;
+      --card-bg: rgba(24, 34, 44, 0.85);
+      --card-border: rgba(0, 255, 255, 0.12);
+      --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18);
     }
 
-    /* Basic HTML and Body setup */
     html {
-      scroll-behavior: smooth; /* Enable smooth scrolling for anchor links */
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--bg);
+      font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+      background: var(--bg-gradient);
       color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden; /* Prevent horizontal scrollbars caused by minor overflows */
+      min-height: 100vh;
+      line-height: 1.7;
+      overflow-x: hidden;
     }
 
-    /* Navigation Bar */
+    /* Hero/Intro Section */
+    .hero-section {
+      width: 100%;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3.5rem 2rem 2.5rem 2rem;
+      background: linear-gradient(120deg, rgba(0, 255, 255, 0.10) 0%, rgba(0, 136, 204, 0.10) 100%);
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content {
+      display: flex;
+      align-items: center;
+      gap: 3.5rem;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--card-border);
+      padding: 2.5rem 2.5rem 2.5rem 2rem;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .hero-photo-portrait {
+      flex-shrink: 0;
+      width: 240px;
+      height: 360px;
+      border-radius: 18px;
+      /* Remove gradient border and background */
+      background: none;
+      padding: 0;
+      box-shadow: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-photo-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+      display: block;
+      background: transparent;
+      box-shadow: none;
+      /* Blend bottom of image into background */
+      -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      /* Optional: for a more subtle blend, adjust the gradient stops */
+    }
+
+    .hero-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-name {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem 0;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 1.1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-intro {
+      font-size: 1.08rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+      max-width: 500px;
+    }
+
+    .hero-contact {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .hero-contact a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+      font-size: 1.08rem;
+    }
+
+    .hero-contact a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* Navbar */
     nav {
-      position: fixed; /* Keep nav visible on scroll */
+      position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.85); /* Semi-transparent background */
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      box-shadow: var(--shadow);
       display: flex;
       justify-content: center;
-      z-index: 100; /* Ensure nav is above most content */
-      padding: 1rem 0;
-      backdrop-filter: blur(5px); /* Frosted glass effect */
+      z-index: 100;
+      padding: 1.1rem 0 1.1rem 0;
+      border-bottom: 1.5px solid rgba(0, 255, 255, 0.08);
     }
 
     nav a {
-      margin: 0 1.5rem;
-      color: var(--accent);
-      text-decoration: none;
-      opacity: 0.8;
-      font-weight: 600;
-      transition: all 0.3s ease; /* Smooth transitions for hover effects */
-    }
-
-    nav a:hover {
-      opacity: 1;
-      transform: translateY(-2px); /* Slight lift effect on hover */
-    }
-
-    /* Profile Info Box (Top Left) */
-    #profile-info {
-      position: fixed; /* Keep it fixed in the viewport */
-      top: 80px; /* Position below the navbar */
-      left: 2rem; /* Distance from the right edge */
-      z-index: 101; /* Ensure it's above the navbar */
-      display: flex;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.8); /* Optional background */
-      padding: 0.8rem;
-      border-radius: 10px; /* Rounded corners */
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Subtle shadow */
-      max-width: 350px; /* Limit width */
-    }
-
-    #profile-info img {
-      width: 50px; /* Profile image size */
-      height: 50px; /* Profile image size */
-      border-radius: 50%; /* Make it circular */
-      object-fit: cover; /* Ensure image covers the area */
-      margin-right: 1rem; /* Space between image and text */
-      border: 2px solid var(--accent); /* Accent border */
-    }
-
-    #profile-info div { /* Container for text */
-       flex-grow: 1; /* Allow text container to take remaining space */
-    }
-
-    #profile-info h4 {
-      margin: 0 0 0.2rem 0; /* Spacing */
-      font-size: 1rem;
-      color: var(--accent);
-    }
-
-    #profile-info p {
-      margin: 0;
-      font-size: 0.85rem;
-      line-height: 1.3;
+      margin: 0 1.7rem;
       color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.08rem;
+      letter-spacing: 0.02em;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      background: none;
+      transition: background 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s, box-shadow 0.2s;
+      opacity: 0.85;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: var(--accent-gradient);
+      color: #101c2c;
+      opacity: 1;
+      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.10);
+    }
+
+    nav a.active {
+      background: var(--accent-gradient);
+      color: #101c2c;
+      opacity: 1;
+      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.10);
+      transition: background 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s, box-shadow 0.2s;
     }
 
     /* Section Styling */
-    section { /* Removed header from this rule */
-      padding: 6rem 2rem 4rem; /* Top, horizontal, bottom padding */
-      min-height: auto; /* Allow sections to size naturally */
-      position: relative;
+    section {
+      padding: 7.5rem 2rem 4.5rem;
+      min-height: auto;
       display: flex;
-      align-items: center; /* Vertically center content within the section padding */
-      /* Removed min-height: 100vh */
+      align-items: center;
+      justify-content: center;
     }
 
     .container {
-      max-width: 1100px; /* Maximum content width */
-      margin: auto; /* Center the container */
-      width: 100%; /* Take full width up to max-width */
+      max-width: 1100px;
+      margin: auto;
+      width: 100%;
     }
 
     .section-content {
-      background: rgba(0, 0, 0, 0.8); /* Dark semi-transparent background for content blocks */
-      padding: 2.5rem;
-      border-radius: 12px; /* Rounded corners */
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Content shadow */
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--card-border);
+      padding: 3rem 2.5rem;
+      margin: 0 auto;
     }
 
     /* Headings */
-    h1, h2, h3 {
-      color: var(--accent);
-      margin-bottom: 1rem;
+    h1,
+    h2,
+    h3 {
+      margin-bottom: 1.1rem;
+      font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.01em;
     }
 
     h2 {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       position: relative;
       padding-bottom: 0.5rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    h2:after { /* Underline effect for H2 */
+    h2:after {
       content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 60px;
-      height: 3px;
-      background: var(--accent);
+      display: block;
+      margin-top: 0.5rem;
+      width: 70px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--accent-gradient);
     }
 
     h3 {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
+      color: var(--accent);
+      margin-bottom: 0.7rem;
     }
 
     /* Buttons */
-    a.button, button.button { /* Style links and buttons similarly */
+    a.button,
+    button.button {
       display: inline-block;
-      padding: 0.8rem 1.5rem;
-      border: 2px solid var(--accent);
-      border-radius: 6px;
-      color: var(--accent);
-      background: none; /* Ensure button background is transparent initially */
+      padding: 0.85rem 1.7rem;
+      border: none;
+      border-radius: 8px;
+      color: #101c2c;
+      font-weight: 700;
+      font-size: 1.05rem;
+      background: var(--accent-gradient);
+      background-size: 200% 200%;
+      background-position: 0% 50%;
+      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.10);
       text-decoration: none;
-      margin-top: 1rem;
-      font-size: 1rem;
-      cursor: pointer; /* Indicate interactivity */
-      transition: all 0.3s ease;
+      margin-top: 1.2rem;
+      cursor: pointer;
+      transition: background-position 0.3s, color 0.2s, box-shadow 0.2s;
     }
 
-    a.button:hover, button.button:hover {
-      background: var(--accent);
-      color: var(--dark);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3); /* Glow effect on hover */
+    a.button:hover,
+    button.button:hover {
+      background-position: 100% 50%;
+      color: #fff;
+      box-shadow: 0 4px 24px 0 rgba(0, 255, 255, 0.18);
     }
 
     /* Footer */
     footer {
       text-align: center;
-      padding: 2rem 0;
-      font-size: 0.9rem;
-      margin-top: 2rem; /* Add some space above the footer */
+      padding: 2.5rem 0 1.5rem 0;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-top: 2rem;
+      background: none;
     }
 
     /* Form Elements */
-    input, textarea {
-      width: 100%; /* Full width within container */
-      padding: 0.8rem;
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.9rem;
       margin-top: 0.5rem;
-      margin-bottom: 1rem; /* Space below inputs */
-      background: #222; /* Dark background for inputs */
-      border: 1px solid #333;
+      margin-bottom: 1.2rem;
+      background: rgba(30, 40, 50, 0.85);
+      border: 1.5px solid var(--card-border);
       color: var(--text);
-      border-radius: 6px;
-      transition: all 0.3s ease;
-      box-sizing: border-box; /* Include padding and border in width */
+      border-radius: 7px;
+      font-size: 1rem;
+      transition: border 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
     }
 
-    input:focus, textarea:focus {
+    input:focus,
+    textarea:focus {
       border-color: var(--accent);
       outline: none;
-      box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.2); /* Focus indicator */
+      box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.13);
     }
 
     label {
-        display: block; /* Ensure labels are on their own line */
-        margin-bottom: 0.2rem; /* Space below labels */
-        font-weight: 600;
+      display: block;
+      margin-bottom: 0.2rem;
+      font-weight: 600;
+      color: var(--text-secondary);
     }
 
-    /* Experience Section Styling */
+    /* Experience Section */
     .experience-item {
       margin-bottom: 2.5rem;
-      padding: 1.5rem;
-      background: rgba(20, 20, 20, 0.7); /* Slightly lighter background for items */
-      border-radius: 8px;
-      border-left: 3px solid var(--accent); /* Accent border on the left */
-      transition: all 0.3s ease;
+      padding: 1.7rem 1.3rem;
+      background: rgba(32, 44, 56, 0.85);
+      border-radius: 10px;
+      border-left: 4px solid;
+      border-image: var(--accent-gradient) 1;
+      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.07);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .experience-item:hover {
-      transform: translateY(-5px); /* Lift effect on hover */
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 8px 32px 0 rgba(0, 255, 255, 0.13);
     }
 
     .experience-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start; /* Align items to the top */
-      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+      align-items: flex-start;
+      flex-wrap: wrap;
       margin-bottom: 1rem;
     }
 
     .experience-title {
       margin: 0;
-      margin-right: 1rem; /* Space between title and date */
+      margin-right: 1rem;
+      font-size: 1.1rem;
+      color: var(--accent);
     }
 
     .experience-date {
-      font-size: 0.9rem;
-      color: #aaa;
-      padding: 0.3rem 0.6rem;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 4px;
-      white-space: nowrap; /* Prevent date from wrapping */
-      margin-top: 0.2rem; /* Align better if title wraps */
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      padding: 0.3rem 0.7rem;
+      background: rgba(0, 255, 255, 0.08);
+      border-radius: 5px;
+      white-space: nowrap;
+      margin-top: 0.2rem;
     }
 
     .experience-company {
       font-weight: normal;
-      color: var(--accent);
-      opacity: 0.8;
+      color: var(--accent2);
+      opacity: 0.85;
     }
 
     .experience-tech {
       margin-top: 0.5rem;
-      font-size: 0.85rem;
-      color: #999;
+      font-size: 0.93rem;
+      color: #aeefff;
     }
 
-    .experience-tech span { /* Tech tags */
+    .experience-tech span {
       display: inline-block;
       margin-right: 0.5rem;
-      margin-bottom: 0.5rem; /* Allow wrapping */
-      padding: 0.2rem 0.5rem;
-      background: rgba(0, 136, 204, 0.2); /* Secondary color background */
-      border-radius: 3px;
+      margin-bottom: 0.5rem;
+      padding: 0.22rem 0.6rem;
+      background: rgba(0, 255, 255, 0.10);
+      border-radius: 4px;
+      font-size: 0.93rem;
     }
 
-    /* Projects Section Styling */
+    /* Projects Section */
     .projects-container {
-      position: relative; /* Needed for absolute positioning of nav buttons */
+      position: relative;
     }
 
     .project-slider {
       display: flex;
-      overflow-x: hidden; /* Hide horizontal scrollbar on the slider itself */
-      scroll-behavior: smooth; /* Smooth scrolling for JS navigation */
-      /* margin: 0 -1rem; */ /* Removed negative margin to help prevent body scrollbar */
-      padding: 0 1rem; /* Add padding instead of negative margin */
-      width: 100%; /* Ensure slider takes container width */
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      padding: 0 1rem;
+      width: 100%;
       box-sizing: border-box;
     }
 
     .project-item {
-      flex: 0 0 100%; /* Each item takes full slider width */
-      padding: 0 0.5rem; /* Space between items if needed, adjust padding */
-      transition: all 0.3s ease;
+      flex: 0 0 100%;
+      padding: 0 0.5rem;
+      transition: all 0.3s;
       box-sizing: border-box;
     }
 
     .project-content {
-      background: rgba(20, 20, 20, 0.7);
-      padding: 2rem;
-      border-radius: 8px;
-      height: 100%; /* Ensure content fills the item height */
-      border-top: 3px solid var(--secondary); /* Secondary color accent */
+      background: rgba(32, 44, 56, 0.85);
+      padding: 2.2rem 1.5rem;
+      border-radius: 10px;
+      border-top: 4px solid;
+      border-image: var(--accent-gradient) 1;
+      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.07);
+      height: 100%;
       box-sizing: border-box;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-tech span {
+      display: inline-block;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding: 0.3rem 0.7rem;
+      background: rgba(0, 255, 255, 0.10);
+      border-radius: 4px;
+      font-size: 0.93rem;
     }
 
     .project-nav {
@@ -303,93 +440,169 @@
       background: none;
       border: none;
       color: var(--accent);
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       cursor: pointer;
-      margin: 0 0.5rem;
+      margin: 0 0.7rem;
       opacity: 0.7;
-      transition: all 0.3s ease;
+      border-radius: 50%;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      padding: 0.2rem 0.7rem;
     }
 
     .project-nav-btn:hover {
+      background: var(--accent-gradient);
+      color: #101c2c;
       opacity: 1;
-      transform: scale(1.2);
+      transform: scale(1.18);
     }
 
     .project-dots {
       display: flex;
       justify-content: center;
-      margin-top: 1rem;
+      margin-top: 1.2rem;
     }
 
     .project-dot {
-      width: 10px;
-      height: 10px;
+      width: 11px;
+      height: 11px;
       border-radius: 50%;
-      background: #444; /* Inactive dot color */
-      margin: 0 5px;
+      background: #3a4d5c;
+      margin: 0 6px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background 0.2s, transform 0.2s;
     }
 
     .project-dot.active {
-      background: var(--accent); /* Active dot color */
-      transform: scale(1.3);
+      background: var(--accent-gradient);
+      transform: scale(1.25);
     }
 
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .project-tech span { /* Project tech tags */
-      display: inline-block;
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-      padding: 0.3rem 0.6rem;
-      background: rgba(0, 136, 204, 0.2);
-      border-radius: 4px;
-      font-size: 0.85rem;
-    }
-
-    /* Chart Container - Added for better control */
+    /* Chart Container */
     #projectChartContainer {
       position: relative;
-      justify-items: center;
-      width: 100%; /* Or 50%, or a fixed pixel value like 600px, etc. */
-      margin-top: 2rem;   /* Keep your top margin */
-  }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      nav a {
-        margin: 0 0.8rem; /* Reduce nav spacing on smaller screens */
-        font-size: 0.9rem;
-      }
-      #profile-info {
-        /* Optionally hide or reposition profile info on small screens */
-        /* display: none; */
-         top: auto; /* Unfix */
-         bottom: 1rem; /* Position at bottom */
-         left: 1rem;
-         right: 1rem;
-         width: auto; /* Adjust width */
-         max-width: none;
-         z-index: 105; /* Ensure visibility if other elements overlap */
-      }
-      h2 { font-size: 1.8rem; }
-      h3 { font-size: 1.3rem; }
-      .section-content { padding: 1.5rem; }
-      section { padding: 4rem 1rem 2rem; }
-      .experience-header { flex-direction: column; align-items: flex-start; }
-      .experience-date { margin-top: 0.5rem; }
+      width: 100%;
+      margin-top: 2.2rem;
     }
 
+    /* Resume Section */
+    iframe[title="Mohammed Tijani Resume PDF"] {
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.07);
+      background: rgba(32, 44, 56, 0.85);
+    }
+
+    /* Contact Section */
+    #contact a {
+      color: var(--accent);
+      margin: 0 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    #contact a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .hero-content {
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 1rem;
+        gap: 2rem;
+      }
+
+      .hero-photo-portrait {
+        width: 180px;
+        height: 270px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        margin: 0 0.5rem;
+        font-size: 0.98rem;
+      }
+
+      .hero-section {
+        padding: 2rem 0.2rem 1.5rem 0.2rem;
+      }
+
+      .hero-content {
+        padding: 1.2rem 0.5rem;
+      }
+
+      .hero-photo-portrait {
+        width: 120px;
+        height: 180px;
+        padding: 3px;
+      }
+
+      .hero-name {
+        font-size: 1.5rem;
+      }
+
+      .hero-title {
+        font-size: 1.05rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.1rem;
+      }
+
+      .section-content {
+        padding: 1rem 0.5rem;
+      }
+
+      section {
+        padding: 4.5rem 0.2rem 2rem;
+      }
+
+      .experience-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .experience-date {
+        margin-top: 0.5rem;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div id="tsparticles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="hero-photo-portrait">
+        <img src="me.jpg" alt="Mohammed Tijani Full Body Photo" />
+      </div>
+      <div class="hero-text">
+        <div class="hero-name">Mohammed Tijani</div>
+        <div class="hero-title">Applications Developer / Analyst</div>
+        <div class="hero-intro">
+          I really enjoy building software that works well for people and using data to create solutions that make a
+          real difference. My experience covers software development, data science, and leading projects with teams. I
+          find I'm at my best when I'm applying technology to solve interesting challenges, and I'm keen to use my
+          skills as an Applications Developer or Analyst.
+          If you need a hardworking, challenge craving individual, I am your candidate. </div>
+        <div class="hero-contact">
+          <a href="mailto:mohammedtjay@gmail.com">mohammedtjay@gmail.com</a>
+          <a href="https://linkedin.com/in/mtjani" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://github.com/motijani" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <nav>
     <a href="#experience">Experience</a>
@@ -398,49 +611,51 @@
     <a href="#contact">Contact</a>
   </nav>
 
-  <div id="profile-info">
-    <img src="https://placehold.co/100x100/111/00ffff?text=MT" alt="Profile Picture" onerror="this.src='https://placehold.co/100x100/111/cccccc?text=Err';"> <div>
-      <h4>Mohammed Tijani</h4>
-      <p>Aspiring Programmer/Data Scientist
-        mohammedtjay@gmail.com
-      </p>
-    </div>
-  </div>
-
   <section id="experience">
     <div class="container section-content">
       <h2>Experience</h2>
-
       <div class="experience-item">
         <div class="experience-header">
-          <h3 class="experience-title">Undergraduate Research Assistant <span class="experience-company">@ The Research Foundation for SUNY Albany</span></h3>
-          <span class="experience-date">March 2025 – Present</span>
+          <h3 class="experience-title">Undergraduate Research Assistant <span class="experience-company">@ The Research
+              Foundation for SUNY Albany</span></h3>
+          <span class="experience-date">March 2025 – May 2025</span>
         </div>
         <div class="experience-tech">
           <span>Python</span><span>Pandas</span><span>NumPy</span><span>Matplotlib</span><span>scikit-learn</span>
         </div>
         <ul>
-          <li>Assist with the deployment, calibration, and maintenance of high-grade air quality instruments and low-cost sensor servicing.</li>
-          <li>Processed, cleaned, and validated large-scale air quality datasets, 16,000+ data points over 2 years to prepare data for analysis and modeling.</li>
-          <li>Developed Python scripts utilizing Pandas and Matplotlib to generate comparative data visualizations, such as customized box plots, for analyzing air quality trends and anomalies across different monitoring network types (e.g., NYC Mesonet, Micronet).</li>
-          <li>Engineered features (e.g., one-hot encoding for location/season) and trained a Random Forest Classifier model on extensive datasets (750,000+ data points) to predict pollutant types based on environmental and temporal features.</li>
-          <li>Analyzed and interpreted complex air quality data by creating statistical summaries (e.g., model performance metrics) and visualizations (e.g., classification heatmaps, feature importance plots) to identify patterns.</li>
+          <li>Assist with the deployment, calibration, and maintenance of high-grade air quality instruments and
+            low-cost sensor servicing.</li>
+          <li>Processed, cleaned, and validated large-scale air quality datasets, 16,000+ data points over 2 years to
+            prepare data for analysis and modeling.</li>
+          <li>Developed Python scripts utilizing Pandas and Matplotlib to generate comparative data visualizations, such
+            as customized box plots, for analyzing air quality trends and anomalies across different monitoring network
+            types (e.g., NYC Mesonet, Micronet).</li>
+          <li>Engineered features (e.g., one-hot encoding for location/season) and trained a Random Forest Classifier
+            model on extensive datasets (750,000+ data points) to predict pollutant types based on environmental and
+            temporal features.</li>
+          <li>Analyzed and interpreted complex air quality data by creating statistical summaries (e.g., model
+            performance metrics) and visualizations (e.g., classification heatmaps, feature importance plots) to
+            identify patterns.</li>
         </ul>
       </div>
-
       <div class="experience-item">
         <div class="experience-header">
-          <h3 class="experience-title">Math Teaching Assistant Intern <span class="experience-company">@ BEAM</span></h3>
+          <h3 class="experience-title">Math Teaching Assistant Intern <span class="experience-company">@ BEAM</span>
+          </h3>
           <span class="experience-date">July 2024 – August 2024</span>
         </div>
         <ul>
-          <li>Mentored and guided 20+ middle school students through a "100 problem challenge," covering foundational and advanced mathematical concepts including Game Theory, Number Theory, and Combinatorics.</li>
-          <li>Designed and implemented hands-on teaching methods, utilizing physical objects and manipulatives, using blocks to model combinatorial possibilities, colored tokens for game theory payoffs, or demonstrating logic puzzles like the counterfeit coin problem with actual coins as class-wide visual aids to explain abstract concepts.</li>
+          <li>Mentored and guided 20+ middle school students through a "100 problem challenge," covering foundational
+            and advanced mathematical concepts including Game Theory, Number Theory, and Combinatorics.</li>
+          <li>Designed and implemented hands-on teaching methods, utilizing physical objects and manipulatives, using
+            blocks to model combinatorial possibilities, colored tokens for game theory payoffs, or demonstrating logic
+            puzzles like the counterfeit coin problem with actual coins as class-wide visual aids to explain abstract
+            concepts.</li>
           <li>Developed interactive, real-world lesson plans to enhance comprehension and engagement.</li>
           <li>Employed visual aids and concrete representations to simplify complex topics.</li>
         </ul>
       </div>
-
       <div class="experience-item">
         <div class="experience-header">
           <h3 class="experience-title">Development Lead <span class="experience-company">@ Flash Application</span></h3>
@@ -450,12 +665,51 @@
           <span>.NET</span><span>C#</span><span>Java</span><span>Redis</span><span>MySQL</span><span>Git</span>
         </div>
         <ul>
-          <li>Developed and launched a flash game, building a community on social applications of 5,500 members over 3 years.</li>
-          <li>Led a team of 4 developers and 5 artists to release frequent updates and design new mechanics (e.g., Projectile Ricochet, Community Market, Battle Pass, Global raids) to meet player base demands.</li>
-          <li>Migrated the database of 5000+ players from MySQL to Redis, leveraging the in-memory storage and data structures to make the query time up to 4 times faster, offering a smoother gameplay experience at a cheaper cost.</li>
-          <li>Managed a team of 20+ members, improving cross-functional communication and data accessibility by implementing data replication and synchronization between European and U.S. servers (enabling real-time updates/collaboration), and organizing team tasks using Discord and GitHub for enhanced visibility.</li>
-          <li>Achieving 15-35% monthly player growth consistently over a year, generated $10K in annual revenue, and drove a game runtime of 99.8%.</li>
+          <li>Developed and launched a flash game, building a community on social applications of 5,500 members over 3
+            years.</li>
+          <li>Led a team of 4 developers and 5 artists to release frequent updates and design new mechanics (e.g.,
+            Projectile Ricochet, Community Market, Battle Pass, Global raids) to meet player base demands.</li>
+          <li>Migrated the database of 5000+ players from MySQL to Redis, leveraging the in-memory storage and data
+            structures to make the query time up to 4 times faster, offering a smoother gameplay experience at a cheaper
+            cost.</li>
+          <li>Managed a team of 20+ members, improving cross-functional communication and data accessibility by
+            implementing data replication and synchronization between European and U.S. servers (enabling real-time
+            updates/collaboration), and organizing team tasks using Discord and GitHub for enhanced visibility.</li>
+          <li>Achieving 15-35% monthly player growth consistently over a year, generated $10K in annual revenue, and
+            drove a game runtime of 99.8%.</li>
         </ul>
+      </div>
+
+      <!-- New Experience: Hats and Ladders -->
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="experience-title">Software Product Tester <span class="experience-company">@ Hats and Ladders</span></h3>
+          <span class="experience-date">April 2019 – May 2019</span>
+        </div>
+        <div class="experience-location" style="color:#b6c9d6; font-size:0.95rem; margin-bottom:0.5rem;">NYC Manhattan</div>
+        <ul>
+          <li>Recruited to be a software tester for an application designed for teenagers.</li>
+          <li>In charge of providing well-constructed optimizations.</li>
+          <li>Drafted and produced positive ideas for the application changes.</li>
+          <li>Gave constructive reports and was called back for another session.</li>
+        </ul>
+        <div class="experience-tech" style="margin-top:0.5rem;"><strong>Skills Developed:</strong> Leadership, Flexibility, Research, Feedback</div>
+      </div>
+
+      <!-- New Experience: Hillcrest High School -->
+      <div class="experience-item">
+        <div class="experience-header">
+          <h3 class="experience-title">Computer IT <span class="experience-company">@ Hillcrest High School</span></h3>
+          <span class="experience-date">February 2017 – April 2018</span>
+        </div>
+        <div class="experience-location" style="color:#b6c9d6; font-size:0.95rem; margin-bottom:0.5rem;">NYC Queens</div>
+        <ul>
+          <li>Joined the Hillcrest Tech Team at Hillcrest High School.</li>
+          <li>Responsible for deploying the school-customized OS to multiple computers.</li>
+          <li>Fixed hardware and software issues on computers all around the school.</li>
+          <li>Gained school recognition and received school IT opportunities.</li>
+        </ul>
+        <div class="experience-tech" style="margin-top:0.5rem;"><strong>Skills Developed:</strong> OS Deployment, Computer Hardware, Computer Software</div>
       </div>
     </div>
   </section>
@@ -463,7 +717,6 @@
   <section id="projects">
     <div class="container section-content">
       <h2>Projects</h2>
-
       <div class="projects-container">
         <div class="project-slider">
           <div class="project-item" id="project1">
@@ -510,26 +763,82 @@
               </ul>
             </div>
           </div>
-        </div> <div class="project-nav">
+
+          <!-- New Projects Start -->
+          <div class="project-item" id="project4">
+            <div class="project-content">
+              <h3>SHANK Java Language Compiler</h3>
+              <div class="project-tech">
+                <span>Java</span><span>Compiler Design</span><span>Recursion</span><span>Semantic Analysis</span>
+              </div>
+              <ul>
+                <li>Developed a compiler in Java for the “Shank” language, featuring loops, data types, and recursion.</li>
+                <li>Implemented semantic analysis, tree nodes, and efficient memory management techniques improving the compiler's performance by 75%.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-item" id="project5">
+            <div class="project-content">
+              <h3>Frame Comparison</h3>
+              <div class="project-tech">
+                <span>Java</span><span>OpenCV</span><span>JavaFX</span><span>Image Processing</span>
+              </div>
+              <ul>
+                <li>Inspired by new generation security cameras, built a program using OpenCV and JavaFX that compared any image to a live camera frame and returned the screen match percentage using a basic algorithm.</li>
+                <li>Gained support from my school's IEEE Club and inspired others to pursue similar projects.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-item" id="project6">
+            <div class="project-content">
+              <h3>Stream Announce</h3>
+              <div class="project-tech">
+                <span>JavaScript</span><span>Twitter API</span><span>Webhooks</span>
+              </div>
+              <ul>
+                <li>As a Twitch streamer, built a tool to automate announcements across social platforms using Twitter API and webhooks, streamlining the process of notifying followers when going live.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-item" id="project7">
+            <div class="project-content">
+              <h3>App Crash Detection</h3>
+              <div class="project-tech">
+                <span>Java</span><span>Automation</span><span>Server Management</span>
+              </div>
+              <ul>
+                <li>Developed a Java application to auto-restart a server upon crash by cloning a .exe file and attempting to delete the original, detecting crashes and taking appropriate recovery actions.</li>
+              </ul>
+            </div>
+          </div>
+          <!-- New Projects End -->
+        </div>
+        <div class="project-nav">
           <button class="project-nav-btn" id="prevProject" aria-label="Previous Project">&#10094;</button>
           <button class="project-nav-btn" id="nextProject" aria-label="Next Project">&#10095;</button>
         </div>
-
         <div class="project-dots">
           <span class="project-dot active" data-index="0" aria-label="Go to Project 1"></span>
           <span class="project-dot" data-index="1" aria-label="Go to Project 2"></span>
           <span class="project-dot" data-index="2" aria-label="Go to Project 3"></span>
+          <span class="project-dot" data-index="3" aria-label="Go to Project 4"></span>
+          <span class="project-dot" data-index="4" aria-label="Go to Project 5"></span>
+          <span class="project-dot" data-index="5" aria-label="Go to Project 6"></span>
+          <span class="project-dot" data-index="6" aria-label="Go to Project 7"></span>
         </div>
-      </div> <div id="projectChartContainer">
-          <canvas id="projectChart"></canvas> </div>
-
-    </div> </section>
+      </div>
+      <div id="projectChartContainer">
+        <canvas id="projectChart"></canvas>
+      </div>
+    </div>
+  </section>
 
   <section id="resume">
     <div class="container section-content">
       <h2>Resume</h2>
-      <iframe title="Mohammed Tijani Resume PDF" src="Mohammed_Tijani_Resume.pdf" width="100%" height="600px" style="border:none; border-radius: 8px; margin-bottom: 1rem;">
-         Your browser does not support embedded PDFs. You can <a href="Mohammed_Tijani_Resume.pdf">download the PDF</a> instead.
+      <iframe title="Mohammed Tijani Resume PDF" src="Mohammed_Tijani_Resume.pdf" width="100%" height="600px">
+        Your browser does not support embedded PDFs. You can <a href="Mohammed_Tijani_Resume.pdf">download the PDF</a>
+        instead.
       </iframe>
       <a class="button" href="Mohammed_Tijani_Resume.pdf" download>Download PDF</a>
     </div>
@@ -540,22 +849,22 @@
       <h2>Contact</h2>
       <form action="mailto:mohammedtjay@gmail.com" method="post" enctype="text/plain">
         <div>
-            <label for="contactName">Name</label>
-            <input type="text" id="contactName" name="Name" required>
+          <label for="contactName">Name</label>
+          <input type="text" id="contactName" name="Name" required>
         </div>
         <div>
-            <label for="contactEmail">Email</label>
-            <input type="email" id="contactEmail" name="Email" required>
+          <label for="contactEmail">Email</label>
+          <input type="email" id="contactEmail" name="Email" required>
         </div>
         <div>
-            <label for="contactMessage">Message</label>
-            <textarea id="contactMessage" name="Message" rows="5" required></textarea>
+          <label for="contactMessage">Message</label>
+          <textarea id="contactMessage" name="Message" rows="5" required></textarea>
         </div>
         <button type="submit" class="button">Send Message</button>
       </form>
       <p style="margin-top: 2rem;">
-          <a href="https://linkedin.com/in/mtjani" style="color:var(--accent); margin-right: 1rem;" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
-          <a href="https://github.com/motijani" target="_blank" rel="noopener noreferrer" style="color:var(--accent); margin-left: 1rem;">GitHub</a>
+        <a href="https://linkedin.com/in/mtjani" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+        <a href="https://github.com/motijani" target="_blank" rel="noopener noreferrer">GitHub</a>
       </p>
     </div>
   </section>
@@ -571,115 +880,106 @@
       // Initialize tsParticles background animation
       tsParticles.load('tsparticles', {
         particles: {
-          number: { value: 30, density: { enable: true, value_area: 800 } }, // Adjust density
+          number: { value: 30, density: { enable: true, value_area: 800 } },
           color: { value: "#00ffff" },
           shape: { type: 'circle' },
-          opacity: { value: 0.4, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.1, sync: false } }, // Fade effect
-          size: { value: 2.5, random: true, anim: { enable: false } }, // Slightly smaller
+          opacity: { value: 0.4, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.1, sync: false } },
+          size: { value: 2.5, random: true, anim: { enable: false } },
           move: {
             enable: true,
-            speed: 1.2, // Slower speed
+            speed: 1.2,
             direction: "none",
             random: true,
             straight: false,
-            outMode: "bounce", // Bounce off edges
+            outMode: "bounce",
             bounce: true,
             attract: { enable: false }
           },
-          collisions: { enable: true } // Particles bounce off each other
+          collisions: { enable: true }
         },
         interactivity: {
           detectsOn: "canvas",
           events: {
-            onhover: { enable: true, mode: 'grab' }, // Grab effect on hover
-            onclick: { enable: true, mode: 'push' }, // Push particles on click
+            onhover: { enable: true, mode: 'grab' },
+            onclick: { enable: true, mode: 'push' },
             resize: true
           },
           modes: {
-            grab: { distance: 150, line_linked: { opacity: 0.7 } }, // Adjust grab distance
-            push: { particles_nb: 3 } // Number of particles to push
+            grab: { distance: 150, line_linked: { opacity: 0.7 } },
+            push: { particles_nb: 3 }
           }
         },
-        retina_detect: true // Adjust for high-DPI screens
+        retina_detect: true
       });
 
-      // Initialize Project Features Chart (Radar Chart)
+      // Initialize Project Features Chart (Horizontal Bar Chart)
       const ctx = document.getElementById('projectChart');
-      if (ctx) { // Check if canvas element exists
+      if (ctx) {
+        const projectNames = [
+          "CGM Application",
+          "MORDLE Bot",
+          "YRBIS Business App",
+          "SHANK Java Compiler",
+          "Frame Comparison",
+          "Stream Announce",
+          "App Crash Detection"
+        ];
+        const techCounts = [8, 5, 7, 4, 4, 3, 3];
+        const barColors = [
+          "rgba(0,255,255,0.7)",
+          "rgba(255,99,132,0.7)",
+          "rgba(54,162,235,0.7)",
+          "rgba(0,200,83,0.7)",
+          "rgba(255,193,7,0.7)",
+          "rgba(156,39,176,0.7)",
+          "rgba(255,87,34,0.7)"
+        ];
         new Chart(ctx.getContext('2d'), {
-          type: 'radar',
+          type: 'bar',
           data: {
-            labels: ['Data Processing', 'UI/UX', 'Machine Learning', 'API Integration', 'Cloud Services'],
-            datasets: [
-              {
-                label: 'CGM App',
-                data: [9, 8, 9, 7, 6],
-                backgroundColor: 'rgba(0, 255, 255, 0.2)', // Accent color fill
-                borderColor: 'rgba(0, 255, 255, 0.8)', // Accent color border
-                pointBackgroundColor: 'rgba(0, 255, 255, 1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(0, 255, 255, 1)'
-              },
-              {
-                label: 'MORDLE',
-                data: [7, 6, 9, 4, 3],
-                backgroundColor: 'rgba(255, 99, 132, 0.2)', // Reddish color fill
-                borderColor: 'rgba(255, 99, 132, 0.8)',
-                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(255, 99, 132, 1)'
-              },
-              {
-                label: 'YRBIS',
-                data: [6, 9, 7, 8, 9],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)', // Bluish color fill
-                borderColor: 'rgba(54, 162, 235, 0.8)',
-                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
-              }
-            ]
+            labels: projectNames,
+            datasets: [{
+              label: 'Number of Technologies Used',
+              data: techCounts,
+              backgroundColor: barColors,
+              borderRadius: 8,
+              borderSkipped: false,
+              maxBarThickness: 32
+            }]
           },
           options: {
-            responsive: true, // Make chart responsive
-            maintainAspectRatio: true, // **FIX:** Keep aspect ratio to prevent infinite height
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: {
-                legend: {
-                    labels: {
-                        color: '#ddd' // Legend text color
-                    }
-                }
+              legend: {
+                display: false
+              },
+              title: {
+                display: true,
+                text: 'Project Technology Breadth',
+                color: '#00fff0',
+                font: { size: 18, weight: 'bold' }
+              }
             },
             scales: {
-              r: { // Radial axis configuration
-                angleLines: {
-                  color: 'rgba(255, 255, 255, 0.2)' // Color of lines from center to labels
-                },
-                grid: {
-                  color: 'rgba(255, 255, 255, 0.2)' // Color of the circular grid lines
-                },
-                pointLabels: {
-                  color: '#ddd', // Color of the labels (Data Processing, UI/UX, etc.)
-                  font: {
-                      size: 12 // Adjust font size if needed
-                  }
-                },
-                ticks: {
-                  backdropColor: 'transparent', // Background of the tick labels (numbers)
-                  color: '#bbb', // Color of the tick labels (numbers)
-                  stepSize: 2 // Adjust step size if needed
-                }
+              x: {
+                beginAtZero: true,
+                grid: { color: 'rgba(255,255,255,0.08)' },
+                ticks: { color: '#b6c9d6', font: { size: 13 } }
+              },
+              y: {
+                grid: { color: 'rgba(255,255,255,0.08)' },
+                ticks: { color: '#eaf6fb', font: { size: 14, weight: 'bold' } }
               }
             }
           }
         });
+        // Set container height for horizontal bar chart
+        ctx.parentElement.style.height = "340px";
       } else {
-          console.error("Project chart canvas element not found!");
+        console.error("Project chart canvas element not found!");
       }
-
 
       // Project Slider Functionality
       const slider = document.querySelector('.project-slider');
@@ -690,84 +990,64 @@
       let currentIndex = 0;
       const totalProjects = items.length;
 
-      // Ensure slider and items exist before proceeding
       if (slider && items.length > 0 && dots.length > 0 && prevBtn && nextBtn) {
-          function updateSliderUI(index) {
-            // Update dots
-            dots.forEach((dot, i) => {
-              dot.classList.toggle('active', i === index);
-            });
-            // Optionally: Disable/Enable nav buttons at ends
-            prevBtn.disabled = index === 0;
-            nextBtn.disabled = index === totalProjects - 1;
-          }
+        function updateSliderUI(index) {
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+          prevBtn.disabled = index === 0;
+          nextBtn.disabled = index === totalProjects - 1;
+        }
 
-          function goToProject(index) {
-            // Clamp index within bounds
-            index = Math.max(0, Math.min(index, totalProjects - 1));
-
-            // Calculate the scroll position
-            // Using scrollLeft on the container itself
-            const scrollAmount = slider.scrollWidth * (index / totalProjects);
-
-            slider.scrollTo({
-              left: items[index].offsetLeft - slider.offsetLeft, // Calculate offset relative to the slider
-              behavior: 'smooth'
-            });
-
-            currentIndex = index;
-            updateSliderUI(currentIndex);
-          }
-
-          // Set initial state
+        function goToProject(index) {
+          index = Math.max(0, Math.min(index, totalProjects - 1));
+          slider.scrollTo({
+            left: items[index].offsetLeft - slider.offsetLeft,
+            behavior: 'smooth'
+          });
+          currentIndex = index;
           updateSliderUI(currentIndex);
+        }
 
-          // Event Listeners for buttons
-          nextBtn.addEventListener('click', () => {
-            goToProject(currentIndex + 1);
-          });
+        updateSliderUI(currentIndex);
 
-          prevBtn.addEventListener('click', () => {
-            goToProject(currentIndex - 1);
-          });
+        nextBtn.addEventListener('click', () => {
+          goToProject(currentIndex + 1);
+        });
 
-          // Event Listeners for dots
-          dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-              const index = parseInt(dot.getAttribute('data-index'));
-              goToProject(index);
-            });
-          });
+        prevBtn.addEventListener('click', () => {
+          goToProject(currentIndex - 1);
+        });
 
-          // Recalculate item widths and scroll position on resize
-          // Debounce resize function for performance
-          let resizeTimeout;
-          window.addEventListener('resize', () => {
-              clearTimeout(resizeTimeout);
-              resizeTimeout = setTimeout(() => {
-                  // Re-apply necessary styles or recalculations if layout depends on JS
-                  // For this flexbox slider, CSS handles width mostly, but we ensure
-                  // the scroll position is correct after resize.
-                  goToProject(currentIndex); // Re-scroll to current index smoothly
-              }, 250); // Adjust debounce delay as needed
+        dots.forEach(dot => {
+          dot.addEventListener('click', () => {
+            const index = parseInt(dot.getAttribute('data-index'));
+            goToProject(index);
           });
+        });
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            goToProject(currentIndex);
+          }, 250);
+        });
 
       } else {
-          console.error("Project slider elements not found or incomplete.");
+        console.error("Project slider elements not found or incomplete.");
       }
-
 
       // Smooth Scroll for Navigation Links & Active State Highlighting
       const navLinks = document.querySelectorAll('nav a');
-      const sections = [...document.querySelectorAll('section')]; // **FIX:** Removed header from sections array
+      const sections = [...document.querySelectorAll('section')];
 
-      // Function to update navigation link styles based on scroll position
       function updateNavHighlight() {
         let currentSectionId = '';
         const scrollPosition = window.scrollY;
 
         sections.forEach(section => {
-          const sectionTop = section.offsetTop - 80; // Adjust offset for fixed nav height
+          const sectionTop = section.offsetTop - 80;
           const sectionHeight = section.offsetHeight;
 
           if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
@@ -775,47 +1055,40 @@
           }
         });
 
-        // Update nav link styles
         navLinks.forEach(navLink => {
           const isActive = navLink.getAttribute('href') === `#${currentSectionId}`;
-          navLink.style.opacity = isActive ? '1' : '0.8';
-          navLink.style.transform = isActive ? 'translateY(-2px)' : 'translateY(0)';
+          navLink.classList.toggle('active', isActive);
         });
       }
 
-      // Add click listeners for smooth scrolling
       navLinks.forEach(link => {
         link.addEventListener('click', e => {
-          e.preventDefault(); // Prevent default anchor jump
+          e.preventDefault();
           const targetId = link.getAttribute('href');
           const targetElement = document.querySelector(targetId);
 
           if (targetElement) {
-            // Calculate position considering the fixed navbar height
             const navHeight = document.querySelector('nav').offsetHeight;
-            const targetPosition = targetElement.offsetTop - navHeight + 1; // +1 for slight buffer
+            const targetPosition = targetElement.offsetTop - navHeight + 1;
 
             window.scrollTo({
               top: targetPosition,
               behavior: 'smooth'
             });
 
-            // Manually update highlight immediately on click for better UX
             navLinks.forEach(navLink => {
-                navLink.style.opacity = '0.8';
-                navLink.style.transform = 'translateY(0)';
+              navLink.classList.remove('active');
             });
-            link.style.opacity = '1';
-            link.style.transform = 'translateY(-2px)';
+            link.classList.add('active');
           }
         });
       });
 
-      // Initial call and event listener for scroll highlighting
       updateNavHighlight();
       window.addEventListener('scroll', updateNavHighlight);
 
-    }); // End DOMContentLoaded
+    });
   </script>
 </body>
+
 </html>
