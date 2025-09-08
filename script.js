@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (learnMoreBtn && heroSection) {
       learnMoreBtn.addEventListener("click", () => {
-        heroSection.style.display = "block";
+        heroSection.style.display = "flex";
         heroSection.scrollIntoView({ behavior: "smooth" });
       });
     }
