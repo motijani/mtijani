@@ -1,1094 +1,557 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mohammed Tijani - Data Science Portfolio</title>
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root {
-      --bg-gradient: linear-gradient(135deg, #101c2c 0%, #1a3a4d 100%);
-      --glass-bg: rgba(20, 30, 40, 0.65);
-      --glass-blur: blur(12px);
-      --accent-gradient: linear-gradient(90deg, #00fff0 0%, #0088cc 100%);
-      --accent: #00fff0;
-      --accent2: #0088cc;
-      --text: #eaf6fb;
-      --text-secondary: #b6c9d6;
-      --card-bg: rgba(24, 34, 44, 0.85);
-      --card-border: rgba(0, 255, 255, 0.12);
-      --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.18);
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* Hero/Intro Section */
-    .hero-section {
-      width: 100%;
-      min-height: 480px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3.5rem 2rem 2.5rem 2rem;
-      background: linear-gradient(120deg, rgba(0, 255, 255, 0.10) 0%, rgba(0, 136, 204, 0.10) 100%);
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-content {
-      display: flex;
-      align-items: center;
-      gap: 3.5rem;
-      background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur);
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      border: 1.5px solid var(--card-border);
-      padding: 2.5rem 2.5rem 2.5rem 2rem;
-      max-width: 1100px;
-      width: 100%;
-    }
-
-    .hero-photo-portrait {
-      flex-shrink: 0;
-      width: 240px;
-      height: 360px;
-      border-radius: 18px;
-      /* Remove gradient border and background */
-      background: none;
-      padding: 0;
-      box-shadow: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero-photo-portrait img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 18px;
-      display: block;
-      background: transparent;
-      box-shadow: none;
-      /* Blend bottom of image into background */
-      -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-      mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-      /* Optional: for a more subtle blend, adjust the gradient stops */
-    }
-
-    .hero-text {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .hero-name {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin: 0 0 0.5rem 0;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-title {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--accent2);
-      margin-bottom: 1.1rem;
-      letter-spacing: 0.01em;
-    }
-
-    .hero-intro {
-      font-size: 1.08rem;
-      color: var(--text-secondary);
-      margin-bottom: 1.2rem;
-      max-width: 500px;
-    }
-
-    .hero-contact {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      margin-top: 0.5rem;
-    }
-
-    .hero-contact a {
-      color: var(--accent);
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.2s;
-      font-size: 1.08rem;
-    }
-
-    .hero-contact a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-
-    /* Navbar */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur);
-      box-shadow: var(--shadow);
-      display: flex;
-      justify-content: center;
-      z-index: 100;
-      padding: 1.1rem 0 1.1rem 0;
-      border-bottom: 1.5px solid rgba(0, 255, 255, 0.08);
-    }
-
-    nav a {
-      margin: 0 1.7rem;
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.08rem;
-      letter-spacing: 0.02em;
-      padding: 0.3rem 0.7rem;
-      border-radius: 6px;
-      background: none;
-      transition: background 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s, box-shadow 0.2s;
-      opacity: 0.85;
-    }
-
-    nav a:hover,
-    nav a:focus {
-      background: var(--accent-gradient);
-      color: #101c2c;
-      opacity: 1;
-      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.10);
-    }
-
-    nav a.active {
-      background: var(--accent-gradient);
-      color: #101c2c;
-      opacity: 1;
-      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.10);
-      transition: background 0.35s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s, box-shadow 0.2s;
-    }
-
-    /* Section Styling */
-    section {
-      padding: 7.5rem 2rem 4.5rem;
-      min-height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      width: 100%;
-    }
-
-    .section-content {
-      background: var(--card-bg);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      border: 1.5px solid var(--card-border);
-      padding: 3rem 2.5rem;
-      margin: 0 auto;
-    }
-
-    /* Headings */
-    h1,
-    h2,
-    h3 {
-      margin-bottom: 1.1rem;
-      font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-    }
-
-    h2 {
-      font-size: 2.4rem;
-      position: relative;
-      padding-bottom: 0.5rem;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    h2:after {
-      content: '';
-      display: block;
-      margin-top: 0.5rem;
-      width: 70px;
-      height: 4px;
-      border-radius: 2px;
-      background: var(--accent-gradient);
-    }
-
-    h3 {
-      font-size: 1.45rem;
-      color: var(--accent);
-      margin-bottom: 0.7rem;
-    }
-
-    /* Buttons */
-    a.button,
-    button.button {
-      display: inline-block;
-      padding: 0.85rem 1.7rem;
-      border: none;
-      border-radius: 8px;
-      color: #101c2c;
-      font-weight: 700;
-      font-size: 1.05rem;
-      background: var(--accent-gradient);
-      background-size: 200% 200%;
-      background-position: 0% 50%;
-      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.10);
-      text-decoration: none;
-      margin-top: 1.2rem;
-      cursor: pointer;
-      transition: background-position 0.3s, color 0.2s, box-shadow 0.2s;
-    }
-
-    a.button:hover,
-    button.button:hover {
-      background-position: 100% 50%;
-      color: #fff;
-      box-shadow: 0 4px 24px 0 rgba(0, 255, 255, 0.18);
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2.5rem 0 1.5rem 0;
-      font-size: 1rem;
-      color: var(--text-secondary);
-      margin-top: 2rem;
-      background: none;
-    }
-
-    /* Form Elements */
-    input,
-    textarea {
-      width: 100%;
-      padding: 0.9rem;
-      margin-top: 0.5rem;
-      margin-bottom: 1.2rem;
-      background: rgba(30, 40, 50, 0.85);
-      border: 1.5px solid var(--card-border);
-      color: var(--text);
-      border-radius: 7px;
-      font-size: 1rem;
-      transition: border 0.2s, box-shadow 0.2s;
-      box-sizing: border-box;
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: var(--accent);
-      outline: none;
-      box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.13);
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.2rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-    }
-
-    /* Experience Section */
-    .experience-item {
-      margin-bottom: 2.5rem;
-      padding: 1.7rem 1.3rem;
-      background: rgba(32, 44, 56, 0.85);
-      border-radius: 10px;
-      border-left: 4px solid;
-      border-image: var(--accent-gradient) 1;
-      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.07);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .experience-item:hover {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 8px 32px 0 rgba(0, 255, 255, 0.13);
-    }
-
-    .experience-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-
-    .experience-title {
-      margin: 0;
-      margin-right: 1rem;
-      font-size: 1.1rem;
-      color: var(--accent);
-    }
-
-    .experience-date {
-      font-size: 0.98rem;
-      color: var(--text-secondary);
-      padding: 0.3rem 0.7rem;
-      background: rgba(0, 255, 255, 0.08);
-      border-radius: 5px;
-      white-space: nowrap;
-      margin-top: 0.2rem;
-    }
-
-    .experience-company {
-      font-weight: normal;
-      color: var(--accent2);
-      opacity: 0.85;
-    }
-
-    .experience-tech {
-      margin-top: 0.5rem;
-      font-size: 0.93rem;
-      color: #aeefff;
-    }
-
-    .experience-tech span {
-      display: inline-block;
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-      padding: 0.22rem 0.6rem;
-      background: rgba(0, 255, 255, 0.10);
-      border-radius: 4px;
-      font-size: 0.93rem;
-    }
-
-    /* Projects Section */
-    .projects-container {
-      position: relative;
-    }
-
-    .project-slider {
-      display: flex;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-      padding: 0 1rem;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .project-item {
-      flex: 0 0 100%;
-      padding: 0 0.5rem;
-      transition: all 0.3s;
-      box-sizing: border-box;
-    }
-
-    .project-content {
-      background: rgba(32, 44, 56, 0.85);
-      padding: 2.2rem 1.5rem;
-      border-radius: 10px;
-      border-top: 4px solid;
-      border-image: var(--accent-gradient) 1;
-      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.07);
-      height: 100%;
-      box-sizing: border-box;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .project-tech span {
-      display: inline-block;
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-      padding: 0.3rem 0.7rem;
-      background: rgba(0, 255, 255, 0.10);
-      border-radius: 4px;
-      font-size: 0.93rem;
-    }
-
-    .project-nav {
-      display: flex;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .project-nav-btn {
-      background: none;
-      border: none;
-      color: var(--accent);
-      font-size: 1.7rem;
-      cursor: pointer;
-      margin: 0 0.7rem;
-      opacity: 0.7;
-      border-radius: 50%;
-      transition: background 0.2s, color 0.2s, transform 0.2s;
-      padding: 0.2rem 0.7rem;
-    }
-
-    .project-nav-btn:hover {
-      background: var(--accent-gradient);
-      color: #101c2c;
-      opacity: 1;
-      transform: scale(1.18);
-    }
-
-    .project-dots {
-      display: flex;
-      justify-content: center;
-      margin-top: 1.2rem;
-    }
-
-    .project-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: #3a4d5c;
-      margin: 0 6px;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .project-dot.active {
-      background: var(--accent-gradient);
-      transform: scale(1.25);
-    }
-
-    /* Chart Container */
-    #projectChartContainer {
-      position: relative;
-      width: 100%;
-      margin-top: 2.2rem;
-    }
-
-    /* Resume Section */
-    iframe[title="Mohammed Tijani Resume PDF"] {
-      border: none;
-      border-radius: 10px;
-      margin-bottom: 1.2rem;
-      box-shadow: 0 2px 12px 0 rgba(0, 255, 255, 0.07);
-      background: rgba(32, 44, 56, 0.85);
-    }
-
-    /* Contact Section */
-    #contact a {
-      color: var(--accent);
-      margin: 0 1rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    #contact a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-
-    /* Responsive */
-    @media (max-width: 1100px) {
-      .hero-content {
-        flex-direction: column;
-        align-items: center;
-        padding: 2rem 1rem;
-        gap: 2rem;
-      }
-
-      .hero-photo-portrait {
-        width: 180px;
-        height: 270px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      nav a {
-        margin: 0 0.5rem;
-        font-size: 0.98rem;
-      }
-
-      .hero-section {
-        padding: 2rem 0.2rem 1.5rem 0.2rem;
-      }
-
-      .hero-content {
-        padding: 1.2rem 0.5rem;
-      }
-
-      .hero-photo-portrait {
-        width: 120px;
-        height: 180px;
-        padding: 3px;
-      }
-
-      .hero-name {
-        font-size: 1.5rem;
-      }
-
-      .hero-title {
-        font-size: 1.05rem;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-      }
-
-      h3 {
-        font-size: 1.1rem;
-      }
-
-      .section-content {
-        padding: 1rem 0.5rem;
-      }
-
-      section {
-        padding: 4.5rem 0.2rem 2rem;
-      }
-
-      .experience-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .experience-date {
-        margin-top: 0.5rem;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <div id="tsparticles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
-
-  <div class="hero-section">
-    <div class="hero-content">
-      <div class="hero-photo-portrait">
-        <img src="me.jpg" alt="Mohammed Tijani Full Body Photo" />
-      </div>
-      <div class="hero-text">
-        <div class="hero-name">Mohammed Tijani</div>
-        <div class="hero-title">Applications Developer / Analyst</div>
-        <div class="hero-intro">
-          I really enjoy building software that works well for people and using data to create solutions that make a
-          real difference. My experience covers software development, data science, and leading projects with teams. I
-          find I'm at my best when I'm applying technology to solve interesting challenges, and I'm keen to use my
-          skills as an Applications Developer or Analyst.
-          If you need a hardworking, challenge craving individual, I am your candidate. </div>
-        <div class="hero-contact">
-          <a href="mailto:mohammedtjay@gmail.com">mohammedtjay@gmail.com</a>
-          <a href="https://linkedin.com/in/mtjani" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://github.com/motijani" target="_blank" rel="noopener noreferrer">GitHub</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mohammed Tijani - Full Stack Developer</title>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div
+      id="tsparticles"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      "
+    ></div>
+
+    <div class="hero-section">
+      <div class="hero-content">
+        <div class="hero-photo-portrait">
+          <img src="me.jpg" alt="Mohammed Tijani Full Body Photo" />
+        </div>
+        <div class="hero-text">
+          <div class="hero-name">Mohammed Tijani</div>
+          <div class="hero-title">Full Stack Developer</div>
+          <div class="hero-intro">
+            Hi my name is Mohammed Tijani, I am a recent graduate from the
+            University at Albany, My journey of programming began when I was in
+            highschool, I fell in love with a 2D MMORPG game and decided to
+            build my own private server off of it, it quickly amassed to 5500+
+            members, from then on I knew I wanted to study programming, I went on
+            to study CS, during my studies I worked on numerous
+            <a href="#projects">projects</a>. One of them I partnered with
+            another school to develop a CGM application for people with
+            diabetes. After my studies I started my own private online service
+            business venture for small local businesses. Recently I joined FastTrack
+            a competitive 8 week program that trained me for the programming industry,
+            we worked on Java, Angular, Spring, REST APIs, PostGres and Git. We also worked
+            on professional development and what it takes to be a good employee.
+          </div>
+          <div class="hero-contact">
+            <a href="mailto:mohammedtjay@gmail.com">mohammedtjay@gmail.com</a>
+            <a
+              href="https://linkedin.com/in/mtjani"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn</a
+            >
+            <a
+              href="https://github.com/motijani"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <nav>
-    <a href="#experience">Experience</a>
-    <a href="#projects">Projects</a>
-    <a href="#resume">Resume</a>
-    <a href="#contact">Contact</a>
-  </nav>
+    <nav>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#resume">Resume</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
-  <section id="experience">
-    <div class="container section-content">
-      <h2>Experience</h2>
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="experience-title">Undergraduate Research Assistant <span class="experience-company">@ The Research
-              Foundation for SUNY Albany</span></h3>
-          <span class="experience-date">March 2025 – May 2025</span>
+    <section id="experience">
+      <div class="container section-content">
+        <h2>Experience</h2>
+        <div class="experience-item">
+          <div class="experience-header">
+            <h3 class="experience-title">
+              Founder/Developer
+              <span class="experience-company"
+                >@ Your Bis (Web Service)</span
+              >
+            </h3>
+            <span class="experience-date">May 2025 – Present</span>
+          </div>
+          <div class="experience-tech">
+            <span>JavaScript</span><span>Cloudflare</span><span>AWS</span
+            ><span>Postmark</span>
+          </div>
+          <ul>
+            <li>
+              Engineering robust, self-hosted Linux API servers, implementing HTTPS and 
+              token-based authentication to deliver secure and high-performance web services.
+            </li>
+            <li>
+              Managing end-to-end web deployment, from domain registration and DNS to SSL provisioning, and utilizing Cloudflare Tunnels for
+              reliable client site hosting, achieving 99.99% uptime.
+            </li>
+            <li>
+              Developing and integrating Google Analytics dashboards for comprehensive 
+              real-time visitor metrics and conversion funnels, persisting
+              data in AWS DynamoDB for scalable analytics.
+            </li>
+            <li>
+              Optimizing website performance by integrating image compression and CDN, resulting in 60% reduction in page-load times and improve
+SEO.
+            </li>
+            <li>
+              Successfully acquired 10 + clients paying for their online business solution through strategic
+              competitive positioning, fostering strong client relationships
+            </li>
+          </ul>
         </div>
-        <div class="experience-tech">
-          <span>Python</span><span>Pandas</span><span>NumPy</span><span>Matplotlib</span><span>scikit-learn</span>
+        <div class="experience-item">
+          <div class="experience-header">
+            <h3 class="experience-title">
+              Undergraduate Research Assistant
+              <span class="experience-company"
+                >@ The Research Foundation for SUNY Albany</span
+              >
+            </h3>
+            <span class="experience-date">March 2025 – May 2025</span>
+          </div>
+          <div class="experience-tech">
+            <span>Python</span><span>Pandas</span><span>NumPy</span
+            ><span>Matplotlib</span><span>scikit-learn</span>
+          </div>
+          <ul>
+            <li>
+              Assist with the deployment, calibration, and maintenance of
+              high-grade air quality instruments and low-cost sensor servicing.
+            </li>
+            <li>
+              Processed, cleaned, and validated large-scale air quality
+              datasets, 16,000+ data points over 2 years to prepare data for
+              analysis and modeling.
+            </li>
+            <li>
+              Developed Python scripts utilizing Pandas and Matplotlib to
+              generate comparative data visualizations, such as customized box
+              plots, for analyzing air quality trends and anomalies across
+              different monitoring network types (e.g., NYC Mesonet, Micronet).
+            </li>
+            <li>
+              Engineered features (e.g., one-hot encoding for location/season)
+              and trained a Random Forest Classifier model on extensive datasets
+              (750,000+ data points) to predict pollutant types based on
+              environmental and temporal features.
+            </li>
+            <li>
+              Analyzed and interpreted complex air quality data by creating
+              statistical summaries (e.g., model performance metrics) and
+              visualizations (e.g., classification heatmaps, feature importance
+              plots) to identify patterns.
+            </li>
+          </ul>
         </div>
-        <ul>
-          <li>Assist with the deployment, calibration, and maintenance of high-grade air quality instruments and
-            low-cost sensor servicing.</li>
-          <li>Processed, cleaned, and validated large-scale air quality datasets, 16,000+ data points over 2 years to
-            prepare data for analysis and modeling.</li>
-          <li>Developed Python scripts utilizing Pandas and Matplotlib to generate comparative data visualizations, such
-            as customized box plots, for analyzing air quality trends and anomalies across different monitoring network
-            types (e.g., NYC Mesonet, Micronet).</li>
-          <li>Engineered features (e.g., one-hot encoding for location/season) and trained a Random Forest Classifier
-            model on extensive datasets (750,000+ data points) to predict pollutant types based on environmental and
-            temporal features.</li>
-          <li>Analyzed and interpreted complex air quality data by creating statistical summaries (e.g., model
-            performance metrics) and visualizations (e.g., classification heatmaps, feature importance plots) to
-            identify patterns.</li>
-        </ul>
-      </div>
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="experience-title">Math Teaching Assistant Intern <span class="experience-company">@ BEAM</span>
-          </h3>
-          <span class="experience-date">July 2024 – August 2024</span>
+        <div class="experience-item">
+          <div class="experience-header">
+            <h3 class="experience-title">
+              Development Lead
+              <span class="experience-company">@ Flash Application</span>
+            </h3>
+            <span class="experience-date">March 2019 – August 2022</span>
+          </div>
+          <div class="experience-tech">
+            <span>.NET</span><span>C#</span><span>Java</span><span>Redis</span
+            ><span>MySQL</span><span>Git</span>
+          </div>
+          <ul>
+            <li>
+              Developed and launched a flash game, building a community on
+              social applications of 5,500 members over 3 years.
+            </li>
+            <li>
+              Led a team of 4 developers and 5 artists to release frequent
+              updates and design new mechanics (e.g., Projectile Ricochet,
+              Community Market, Battle Pass, Global raids) to meet player base
+              demands.
+            </li>
+            <li>
+              Migrated the database of 5000+ players from MySQL to Redis,
+              leveraging the in-memory storage and data structures to make the
+              query time up to 4 times faster, offering a smoother gameplay
+              experience at a cheaper cost.
+            </li>
+            <li>
+              Managed a team of 20+ members, improving cross-functional
+              communication and data accessibility by implementing data
+              replication and synchronization between European and U.S. servers
+              (enabling real-time updates/collaboration), and organizing team
+              tasks using Discord and GitHub for enhanced visibility.
+            </li>
+            <li>
+              Achieving 15-35% monthly player growth consistently over a year,
+              generated $10K in annual revenue, and drove a game runtime of
+              99.8%.
+            </li>
+          </ul>
         </div>
-        <ul>
-          <li>Mentored and guided 20+ middle school students through a "100 problem challenge," covering foundational
-            and advanced mathematical concepts including Game Theory, Number Theory, and Combinatorics.</li>
-          <li>Designed and implemented hands-on teaching methods, utilizing physical objects and manipulatives, using
-            blocks to model combinatorial possibilities, colored tokens for game theory payoffs, or demonstrating logic
-            puzzles like the counterfeit coin problem with actual coins as class-wide visual aids to explain abstract
-            concepts.</li>
-          <li>Developed interactive, real-world lesson plans to enhance comprehension and engagement.</li>
-          <li>Employed visual aids and concrete representations to simplify complex topics.</li>
-        </ul>
-      </div>
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="experience-title">Development Lead <span class="experience-company">@ Flash Application</span></h3>
-          <span class="experience-date">March 2019 – August 2022</span>
+         <div class="experience-item">
+          <div class="experience-header">
+            <h3 class="experience-title">
+              Math Teaching Assistant Intern
+              <span class="experience-company">@ BEAM</span>
+            </h3>
+            <span class="experience-date">July 2024 – August 2024</span>
+          </div>
+          <ul>
+            <li>
+              Mentored and guided 20+ middle school students through a "100
+              problem challenge," covering foundational and advanced
+              mathematical concepts including Game Theory, Number Theory, and
+              Combinatorics.
+            </li>
+            <li>
+              Designed and implemented hands-on teaching methods, utilizing
+              physical objects and manipulatives, using blocks to model
+              combinatorial possibilities, colored tokens for game theory
+              payoffs, or demonstrating logic puzzles like the counterfeit coin
+              problem with actual coins as class-wide visual aids to explain
+              abstract concepts.
+            </li>
+            <li>
+              Developed interactive, real-world lesson plans to enhance
+              comprehension and engagement.
+            </li>
+            <li>
+              Employed visual aids and concrete representations to simplify
+              complex topics.
+            </li>
+          </ul>
         </div>
-        <div class="experience-tech">
-          <span>.NET</span><span>C#</span><span>Java</span><span>Redis</span><span>MySQL</span><span>Git</span>
-        </div>
-        <ul>
-          <li>Developed and launched a flash game, building a community on social applications of 5,500 members over 3
-            years.</li>
-          <li>Led a team of 4 developers and 5 artists to release frequent updates and design new mechanics (e.g.,
-            Projectile Ricochet, Community Market, Battle Pass, Global raids) to meet player base demands.</li>
-          <li>Migrated the database of 5000+ players from MySQL to Redis, leveraging the in-memory storage and data
-            structures to make the query time up to 4 times faster, offering a smoother gameplay experience at a cheaper
-            cost.</li>
-          <li>Managed a team of 20+ members, improving cross-functional communication and data accessibility by
-            implementing data replication and synchronization between European and U.S. servers (enabling real-time
-            updates/collaboration), and organizing team tasks using Discord and GitHub for enhanced visibility.</li>
-          <li>Achieving 15-35% monthly player growth consistently over a year, generated $10K in annual revenue, and
-            drove a game runtime of 99.8%.</li>
-        </ul>
-      </div>
+    </section>
 
-      <!-- New Experience: Hats and Ladders -->
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="experience-title">Software Product Tester <span class="experience-company">@ Hats and Ladders</span></h3>
-          <span class="experience-date">April 2019 – May 2019</span>
-        </div>
-        <div class="experience-location" style="color:#b6c9d6; font-size:0.95rem; margin-bottom:0.5rem;">NYC Manhattan</div>
-        <ul>
-          <li>Recruited to be a software tester for an application designed for teenagers.</li>
-          <li>In charge of providing well-constructed optimizations.</li>
-          <li>Drafted and produced positive ideas for the application changes.</li>
-          <li>Gave constructive reports and was called back for another session.</li>
-        </ul>
-        <div class="experience-tech" style="margin-top:0.5rem;"><strong>Skills Developed:</strong> Leadership, Flexibility, Research, Feedback</div>
-      </div>
+    <section id="projects">
+      <div class="container section-content">
+        <div class="github-profile">
 
-      <!-- New Experience: Hillcrest High School -->
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="experience-title">Computer IT <span class="experience-company">@ Hillcrest High School</span></h3>
-          <span class="experience-date">February 2017 – April 2018</span>
         </div>
-        <div class="experience-location" style="color:#b6c9d6; font-size:0.95rem; margin-bottom:0.5rem;">NYC Queens</div>
-        <ul>
-          <li>Joined the Hillcrest Tech Team at Hillcrest High School.</li>
-          <li>Responsible for deploying the school-customized OS to multiple computers.</li>
-          <li>Fixed hardware and software issues on computers all around the school.</li>
-          <li>Gained school recognition and received school IT opportunities.</li>
-        </ul>
-        <div class="experience-tech" style="margin-top:0.5rem;"><strong>Skills Developed:</strong> OS Deployment, Computer Hardware, Computer Software</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects">
-    <div class="container section-content">
-      <h2>Projects</h2>
-      <div class="projects-container">
-        <div class="project-slider">
-          <div class="project-item" id="project1">
-            <div class="project-content">
-              <h3>CGM Application</h3>
-              <div class="project-tech">
-                <span>JavaScript</span><span>Expo</span><span>Python</span><span>Tableau Public</span><span>NumPy</span><span>Pandas</span><span>Git</span><span>React</span>
+        <h2>Projects</h2>
+        <div class="projects-container">
+          <div class="project-slider">
+                        <div class="project-item" id="project1">
+              <div class="project-content">
+                <h3>Twitter API</h3>
+                <a href="https://github.com/fasttrackd-student-work/spring-assessment-social-media-aug-2025-team-1" target="_blank" rel="noopener noreferrer" class="github-link">View Project</a>
+                <div class="project-tech">
+                  <span>Java</span><span>Spring Boot</span><span>RestAPI</span>
+                  <span>PostGres</span><span>Postman</span>
+                </div>
+                <ul>
+                  <li>
+                    Designed a twitter-clone API backend in Spring Boot.
+                  </li>
+                  <li>
+                    Tasked with designing 30 CRUD endpoints.
+                  </li>
+                  <li>
+                    Designed all endpoints following Onion architecture, leveraging JPA and Mapstruct.
+                  </li>
+                  <li>
+                    Successfully passed Postman test suite containing 100+ test cases.
+                  </li>
+                </ul>
               </div>
-              <ul>
-                <li>Identified a growing need for proactive diabetes management tools that not only monitor but also predict glucose fluctuations.</li>
-                <li>Trained a Machine Learning model using the Deep Forest algorithm in Python on historical time-series glucose level data (14M+ data points from 400+ individuals), leveraging university high-performance computing resources to generate predictive insights (e.g., caution alerts).</li>
-                <li>Designed and delivered a Continuous Glucose Monitoring (CGM) application with real-time glucose monitoring by integrating various user health inputs (e.g., meal logs, activity data), a predictive tool analyzing trends every 5 minutes via server API calls, and data visualizations (e.g., glucose trend graphs using Tableau Public and react-native-chart, predictive alerts for potentially abnormal levels) to empower end-users.</li>
-                <li>Built a cross-platform mobile app for real-time glucose monitoring using Expo & React.</li>
-              </ul>
+            </div>
+            <div class="project-item" id="project2">
+              <div class="project-content">
+                <h3>CGM Application</h3>
+                <a href="https://github.com/motijani/CapstoneAlpha" target="_blank" rel="noopener noreferrer" class="github-link">View Project</a>
+                <div class="project-tech">
+                  <span>JavaScript</span><span>Expo</span><span>Python</span>
+                  <span>Tableau Public</span><span>NumPy</span>
+                  <span>Pandas</span><span>Git</span><span>React</span>
+                </div>
+                <ul>
+                  <li>
+                    Identified a growing need for proactive diabetes management
+                    tools that not only monitor but also predict glucose
+                    fluctuations.
+                  </li>
+                  <li>
+                    Trained a Machine Learning model using the Deep Forest
+                    algorithm in Python on historical time-series glucose level
+                    data (14M+ data points from 400+ individuals), leveraging
+                    university high-performance computing resources to generate
+                    predictive insights (e.g., caution alerts).
+                  </li>
+                  <li>
+                    Designed and delivered a Continuous Glucose Monitoring (CGM)
+                    application with real-time glucose monitoring by integrating
+                    various user health inputs (e.g., meal logs, activity data),
+                    a predictive tool analyzing trends every 5 minutes via
+                    server API calls, and data visualizations (e.g., glucose
+                    trend graphs using Tableau Public and react-native-chart,
+                    predictive alerts for potentially abnormal levels) to
+                    empower end-users.
+                  </li>
+                  <li>
+                    Built a cross-platform mobile app for real-time glucose
+                    monitoring using Expo & React.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-item" id="project3">
+              <div class="project-content">
+                <h3>MORDLE Bot</h3>
+                <a href="https://github.com/motijani/MORDLE" target="_blank" rel="noopener noreferrer" class="github-link">View Project</a>
+                <div class="project-tech">
+                  <span>Python</span><span>scikit-learn</span>
+                  <span>Tkinter</span><span>PIL</span>
+                  <span>Machine Learning</span>
+                </div>
+                <ul>
+                  <li>
+                    Designed ML pipeline with custom encoding to predict optimal
+                    Wordle guesses.
+                  </li>
+                  <li>
+                    Automated 100K+ game simulations; achieved average of 4.2
+                    guesses per word.
+                  </li>
+                  <li>
+                    Implemented Random Forest Classifier in scikit-learn,
+                    reaching 93% predictive accuracy.
+                  </li>
+                  <li>
+                    Developed Tkinter GUI & PIL image feedback loop for
+                    intuitive user interaction.
+                  </li>
+                  <li>
+                    Created a sophisticated algorithm that analyzes letter
+                    frequency and position patterns to optimize word selection
+                    strategy.
+                  </li>
+                  <li>
+                    Implemented a feedback system that learns from previous
+                    guesses to improve future performance.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-item" id="project3">
+              <div class="project-content">
+                <h3>YRBIS Business App</h3>
+                <a href="https://github.com/motijani/YRBIS" target="_blank" rel="noopener noreferrer" class="github-link">View Project</a>
+                <div class="project-tech">
+                  <span>JavaScript</span><span>Expo</span><span>AWS</span
+                  ><span>OpenAI</span><span>Git</span><span>React</span
+                  ><span>DynamoDB</span>
+                </div>
+                <ul>
+                  <li>
+                    Identified a need for small business promotion, leading to
+                    the creation of a full-scale Android/iOS application (using
+                    React Native/Expo) to address the need for increased small
+                    business visibility and streamline the business creation
+                    experience by enabling users to post and promote their
+                    businesses.
+                  </li>
+                  <li>
+                    Designed and implemented key features including secure user
+                    authentication for onboarding, AI-assisted business
+                    description crafting and tag generation alongside location
+                    fetching/display for post creation, and automated content
+                    appropriateness checks (OpenAI API) for content moderation
+                    to simplify user workflows and ensure platform integrity.
+                  </li>
+                  <li>
+                    Streamlined the business creation experience and
+                    demonstrated scalable mobile app architecture with an
+                    AI-enhanced user interface, utilizing AWS DynamoDB for
+                    backend data storage.
+                  </li>
+                  <li>
+                    Enhanced UX with intuitive UI and real-time feedback on
+                    content quality.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="project-item" id="project4">
+              <div class="project-content">
+                <h3>SHANK Java Language Compiler</h3>
+                <div class="project-tech">
+                  <span>Java</span><span>Compiler Design</span
+                  ><span>Recursion</span><span>Semantic Analysis</span>
+                </div>
+                <ul>
+                  <li>
+                    Developed a compiler in Java for the “Shank” language,
+                    featuring loops, data types, and recursion.
+                  </li>
+                  <li>
+                    Implemented semantic analysis, tree nodes, and efficient
+                    memory management techniques improving the compiler's
+                    performance by 75%.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-item" id="project5">
+              <div class="project-content">
+                <h3>Frame Comparison</h3>
+                 <a href="https://github.com/motijani/Frame-Comparison-openCVJava" target="_blank" rel="noopener noreferrer" class="github-link">View Project</a>
+                <div class="project-tech">
+                  <span>Java</span><span>OpenCV</span><span>JavaFX</span
+                  ><span>Image Processing</span>
+                </div>
+                <ul>
+                  <li>
+                    Inspired by new generation security cameras, built a program
+                    using OpenCV and JavaFX that compared any image to a live
+                    camera frame and returned the screen match percentage using
+                    a basic algorithm.
+                  </li>
+                  <li>
+                    Gained support from my school's IEEE Club and inspired
+                    others to pursue similar projects.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-item" id="project6">
+              <div class="project-content">
+                <h3>Stream Announce</h3>
+                <div class="project-tech">
+                  <span>JavaScript</span><span>Twitter API</span
+                  ><span>Webhooks</span>
+                </div>
+                <ul>
+                  <li>
+                    As a Twitch streamer, built a tool to automate announcements
+                    across social platforms using Twitter API and webhooks,
+                    streamlining the process of notifying followers when going
+                    live.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-item" id="project7">
+              <div class="project-content">
+                <h3>App Crash Detection</h3>
+                <div class="project-tech">
+                  <span>Java</span><span>Automation</span
+                  ><span>Server Management</span>
+                </div>
+                <ul>
+                  <li>
+                    Developed a Java application to auto-restart a server upon
+                    crash by cloning a .exe file and attempting to delete the
+                    original, detecting crashes and taking appropriate recovery
+                    actions.
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div class="project-item" id="project2">
-            <div class="project-content">
-              <h3>MORDLE Bot</h3>
-              <div class="project-tech">
-                <span>Python</span><span>scikit-learn</span><span>Tkinter</span><span>PIL</span><span>Machine Learning</span>
-              </div>
-              <ul>
-                <li>Designed ML pipeline with custom encoding to predict optimal Wordle guesses.</li>
-                <li>Automated 100K+ game simulations; achieved average of 4.2 guesses per word.</li>
-                <li>Implemented Random Forest Classifier in scikit-learn, reaching 93% predictive accuracy.</li>
-                <li>Developed Tkinter GUI & PIL image feedback loop for intuitive user interaction.</li>
-                <li>Created a sophisticated algorithm that analyzes letter frequency and position patterns to optimize word selection strategy.</li>
-                <li>Implemented a feedback system that learns from previous guesses to improve future performance.</li>
-              </ul>
-            </div>
+          <div class="project-nav">
+            <button
+              class="project-nav-btn"
+              id="prevProject"
+              aria-label="Previous Project"
+            >
+              &#10094;
+            </button>
+            <button
+              class="project-nav-btn"
+              id="nextProject"
+              aria-label="Next Project"
+            >
+              &#10095;
+            </button>
           </div>
-          <div class="project-item" id="project3">
-            <div class="project-content">
-              <h3>YRBIS Business App</h3>
-              <div class="project-tech">
-                <span>JavaScript</span><span>Expo</span><span>AWS</span><span>OpenAI</span><span>Git</span><span>React</span><span>DynamoDB</span>
-              </div>
-              <ul>
-                <li>Identified a need for small business promotion, leading to the creation of a full-scale Android/iOS application (using React Native/Expo) to address the need for increased small business visibility and streamline the business creation experience by enabling users to post and promote their businesses.</li>
-                <li>Designed and implemented key features including secure user authentication for onboarding, AI-assisted business description crafting and tag generation alongside location fetching/display for post creation, and automated content appropriateness checks (OpenAI API) for content moderation to simplify user workflows and ensure platform integrity.</li>
-                <li>Streamlined the business creation experience and demonstrated scalable mobile app architecture with an AI-enhanced user interface, utilizing AWS DynamoDB for backend data storage.</li>
-                <li>Enhanced UX with intuitive UI and real-time feedback on content quality.</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- New Projects Start -->
-          <div class="project-item" id="project4">
-            <div class="project-content">
-              <h3>SHANK Java Language Compiler</h3>
-              <div class="project-tech">
-                <span>Java</span><span>Compiler Design</span><span>Recursion</span><span>Semantic Analysis</span>
-              </div>
-              <ul>
-                <li>Developed a compiler in Java for the “Shank” language, featuring loops, data types, and recursion.</li>
-                <li>Implemented semantic analysis, tree nodes, and efficient memory management techniques improving the compiler's performance by 75%.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="project-item" id="project5">
-            <div class="project-content">
-              <h3>Frame Comparison</h3>
-              <div class="project-tech">
-                <span>Java</span><span>OpenCV</span><span>JavaFX</span><span>Image Processing</span>
-              </div>
-              <ul>
-                <li>Inspired by new generation security cameras, built a program using OpenCV and JavaFX that compared any image to a live camera frame and returned the screen match percentage using a basic algorithm.</li>
-                <li>Gained support from my school's IEEE Club and inspired others to pursue similar projects.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="project-item" id="project6">
-            <div class="project-content">
-              <h3>Stream Announce</h3>
-              <div class="project-tech">
-                <span>JavaScript</span><span>Twitter API</span><span>Webhooks</span>
-              </div>
-              <ul>
-                <li>As a Twitch streamer, built a tool to automate announcements across social platforms using Twitter API and webhooks, streamlining the process of notifying followers when going live.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="project-item" id="project7">
-            <div class="project-content">
-              <h3>App Crash Detection</h3>
-              <div class="project-tech">
-                <span>Java</span><span>Automation</span><span>Server Management</span>
-              </div>
-              <ul>
-                <li>Developed a Java application to auto-restart a server upon crash by cloning a .exe file and attempting to delete the original, detecting crashes and taking appropriate recovery actions.</li>
-              </ul>
-            </div>
-          </div>
-          <!-- New Projects End -->
+          <div class="project-dots"></div>
         </div>
-        <div class="project-nav">
-          <button class="project-nav-btn" id="prevProject" aria-label="Previous Project">&#10094;</button>
-          <button class="project-nav-btn" id="nextProject" aria-label="Next Project">&#10095;</button>
-        </div>
-        <div class="project-dots">
-          <span class="project-dot active" data-index="0" aria-label="Go to Project 1"></span>
-          <span class="project-dot" data-index="1" aria-label="Go to Project 2"></span>
-          <span class="project-dot" data-index="2" aria-label="Go to Project 3"></span>
-          <span class="project-dot" data-index="3" aria-label="Go to Project 4"></span>
-          <span class="project-dot" data-index="4" aria-label="Go to Project 5"></span>
-          <span class="project-dot" data-index="5" aria-label="Go to Project 6"></span>
-          <span class="project-dot" data-index="6" aria-label="Go to Project 7"></span>
+        <div id="projectChartContainer">
+          <canvas id="projectChart"></canvas>
         </div>
       </div>
-      <div id="projectChartContainer">
-        <canvas id="projectChart"></canvas>
+    </section>
+
+    <section id="resume">
+      <div class="container section-content">
+        <h2>Resume</h2>
+        <iframe
+          title="Mohammed Tijani Resume PDF"
+          src="Mohammed_Tijani_Resume.pdf"
+          width="100%"
+          height="600px"
+        >
+          Your browser does not support embedded PDFs. You can
+          <a href="Mohammed_Tijani_Resume.pdf">download the PDF</a>
+          instead.
+        </iframe>
+        <a class="button" href="Mohammed_Tijani_Resume.pdf" download
+          >Download PDF</a
+        >
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="resume">
-    <div class="container section-content">
-      <h2>Resume</h2>
-      <iframe title="Mohammed Tijani Resume PDF" src="Mohammed_Tijani_Resume.pdf" width="100%" height="600px">
-        Your browser does not support embedded PDFs. You can <a href="Mohammed_Tijani_Resume.pdf">download the PDF</a>
-        instead.
-      </iframe>
-      <a class="button" href="Mohammed_Tijani_Resume.pdf" download>Download PDF</a>
-    </div>
-  </section>
+    <section id="contact">
+      <div class="container section-content">
+        <h2>Contact</h2>
+        <form
+          action="mailto:mohammedtjay@gmail.com"
+          method="post"
+          enctype="text/plain"
+        >
+          <div>
+            <label for="contactName">Name</label>
+            <input type="text" id="contactName" name="Name" required />
+          </div>
+          <div>
+            <label for="contactEmail">Email</label>
+            <input type="email" id="contactEmail" name="Email" required />
+          </div>
+          <div>
+            <label for="contactMessage">Message</label>
+            <textarea
+              id="contactMessage"
+              name="Message"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="button">Send Message</button>
+        </form>
+        <p style="margin-top: 2rem">
+          <a
+            href="https://linkedin.com/in/mtjani"
+            target="_blank"
+            rel="noopener noreferrer"
+            >LinkedIn</a
+          >
+          |
+          <a
+            href="https://github.com/motijani"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
+        </p>
+      </div>
+    </section>
 
-  <section id="contact">
-    <div class="container section-content">
-      <h2>Contact</h2>
-      <form action="mailto:mohammedtjay@gmail.com" method="post" enctype="text/plain">
-        <div>
-          <label for="contactName">Name</label>
-          <input type="text" id="contactName" name="Name" required>
-        </div>
-        <div>
-          <label for="contactEmail">Email</label>
-          <input type="email" id="contactEmail" name="Email" required>
-        </div>
-        <div>
-          <label for="contactMessage">Message</label>
-          <textarea id="contactMessage" name="Message" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="button">Send Message</button>
-      </form>
-      <p style="margin-top: 2rem;">
-        <a href="https://linkedin.com/in/mtjani" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
-        <a href="https://github.com/motijani" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </p>
-    </div>
-  </section>
+    <footer>
+      <p>&copy; 2025 Mohammed Tijani</p>
+    </footer>
 
-  <footer>
-    <p>&copy; 2025 Mohammed Tijani</p>
-  </footer>
-
-  <script>
-    // Wait for the DOM to be fully loaded before running scripts
-    document.addEventListener('DOMContentLoaded', () => {
-
-      // Initialize tsParticles background animation
-      tsParticles.load('tsparticles', {
-        particles: {
-          number: { value: 30, density: { enable: true, value_area: 800 } },
-          color: { value: "#00ffff" },
-          shape: { type: 'circle' },
-          opacity: { value: 0.4, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.1, sync: false } },
-          size: { value: 2.5, random: true, anim: { enable: false } },
-          move: {
-            enable: true,
-            speed: 1.2,
-            direction: "none",
-            random: true,
-            straight: false,
-            outMode: "bounce",
-            bounce: true,
-            attract: { enable: false }
-          },
-          collisions: { enable: true }
-        },
-        interactivity: {
-          detectsOn: "canvas",
-          events: {
-            onhover: { enable: true, mode: 'grab' },
-            onclick: { enable: true, mode: 'push' },
-            resize: true
-          },
-          modes: {
-            grab: { distance: 150, line_linked: { opacity: 0.7 } },
-            push: { particles_nb: 3 }
-          }
-        },
-        retina_detect: true
-      });
-
-      // Initialize Project Features Chart (Horizontal Bar Chart)
-      const ctx = document.getElementById('projectChart');
-      if (ctx) {
-        const projectNames = [
-          "CGM Application",
-          "MORDLE Bot",
-          "YRBIS Business App",
-          "SHANK Java Compiler",
-          "Frame Comparison",
-          "Stream Announce",
-          "App Crash Detection"
-        ];
-        const techCounts = [8, 5, 7, 4, 4, 3, 3];
-        const barColors = [
-          "rgba(0,255,255,0.7)",
-          "rgba(255,99,132,0.7)",
-          "rgba(54,162,235,0.7)",
-          "rgba(0,200,83,0.7)",
-          "rgba(255,193,7,0.7)",
-          "rgba(156,39,176,0.7)",
-          "rgba(255,87,34,0.7)"
-        ];
-        new Chart(ctx.getContext('2d'), {
-          type: 'bar',
-          data: {
-            labels: projectNames,
-            datasets: [{
-              label: 'Number of Technologies Used',
-              data: techCounts,
-              backgroundColor: barColors,
-              borderRadius: 8,
-              borderSkipped: false,
-              maxBarThickness: 32
-            }]
-          },
-          options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                display: false
-              },
-              title: {
-                display: true,
-                text: 'Project Technology Breadth',
-                color: '#00fff0',
-                font: { size: 18, weight: 'bold' }
-              }
-            },
-            scales: {
-              x: {
-                beginAtZero: true,
-                grid: { color: 'rgba(255,255,255,0.08)' },
-                ticks: { color: '#b6c9d6', font: { size: 13 } }
-              },
-              y: {
-                grid: { color: 'rgba(255,255,255,0.08)' },
-                ticks: { color: '#eaf6fb', font: { size: 14, weight: 'bold' } }
-              }
-            }
-          }
-        });
-        // Set container height for horizontal bar chart
-        ctx.parentElement.style.height = "340px";
-      } else {
-        console.error("Project chart canvas element not found!");
-      }
-
-      // Project Slider Functionality
-      const slider = document.querySelector('.project-slider');
-      const items = document.querySelectorAll('.project-item');
-      const dots = document.querySelectorAll('.project-dot');
-      const prevBtn = document.getElementById('prevProject');
-      const nextBtn = document.getElementById('nextProject');
-      let currentIndex = 0;
-      const totalProjects = items.length;
-
-      if (slider && items.length > 0 && dots.length > 0 && prevBtn && nextBtn) {
-        function updateSliderUI(index) {
-          dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-          });
-          prevBtn.disabled = index === 0;
-          nextBtn.disabled = index === totalProjects - 1;
-        }
-
-        function goToProject(index) {
-          index = Math.max(0, Math.min(index, totalProjects - 1));
-          slider.scrollTo({
-            left: items[index].offsetLeft - slider.offsetLeft,
-            behavior: 'smooth'
-          });
-          currentIndex = index;
-          updateSliderUI(currentIndex);
-        }
-
-        updateSliderUI(currentIndex);
-
-        nextBtn.addEventListener('click', () => {
-          goToProject(currentIndex + 1);
-        });
-
-        prevBtn.addEventListener('click', () => {
-          goToProject(currentIndex - 1);
-        });
-
-        dots.forEach(dot => {
-          dot.addEventListener('click', () => {
-            const index = parseInt(dot.getAttribute('data-index'));
-            goToProject(index);
-          });
-        });
-
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-          clearTimeout(resizeTimeout);
-          resizeTimeout = setTimeout(() => {
-            goToProject(currentIndex);
-          }, 250);
-        });
-
-      } else {
-        console.error("Project slider elements not found or incomplete.");
-      }
-
-      // Smooth Scroll for Navigation Links & Active State Highlighting
-      const navLinks = document.querySelectorAll('nav a');
-      const sections = [...document.querySelectorAll('section')];
-
-      function updateNavHighlight() {
-        let currentSectionId = '';
-        const scrollPosition = window.scrollY;
-
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop - 80;
-          const sectionHeight = section.offsetHeight;
-
-          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-            currentSectionId = section.getAttribute('id');
-          }
-        });
-
-        navLinks.forEach(navLink => {
-          const isActive = navLink.getAttribute('href') === `#${currentSectionId}`;
-          navLink.classList.toggle('active', isActive);
-        });
-      }
-
-      navLinks.forEach(link => {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          const targetId = link.getAttribute('href');
-          const targetElement = document.querySelector(targetId);
-
-          if (targetElement) {
-            const navHeight = document.querySelector('nav').offsetHeight;
-            const targetPosition = targetElement.offsetTop - navHeight + 1;
-
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-
-            navLinks.forEach(navLink => {
-              navLink.classList.remove('active');
-            });
-            link.classList.add('active');
-          }
-        });
-      });
-
-      updateNavHighlight();
-      window.addEventListener('scroll', updateNavHighlight);
-
-    });
-  </script>
-</body>
-
+    <script src="script.js"></script>
+  </body>
 </html>
