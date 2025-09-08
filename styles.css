@@ -112,7 +112,7 @@ body {
   font-size: 1.08rem;
   color: var(--text-secondary);
   margin-bottom: 1.2rem;
-  max-width: 500px;
+  max-width: 90%;
 }
 
 .hero-contact {
@@ -558,6 +558,34 @@ iframe[title="Mohammed Tijani Resume PDF"] {
 
 .github-profile {
   margin-bottom: 2rem;
+  padding-top: 6rem;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.learn-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent);
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid var(--accent);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.learn-more-btn:hover {
+  background: var(--accent);
+  color: var(--bg-gradient);
+  transform: translateX(2px);
 }
 
 .github-bio-container {

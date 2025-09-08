@@ -153,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a href="https://github.com/motijani" target="_blank" rel="noopener noreferrer" class="github-link">
                   View GitHub Profile
                 </a>
+                <button id="learnMoreBtn" class="learn-more-btn">View More.</button>
               </div>
               <img src="${pfpLink}" alt="github pfp" class="github-avatar">
             </div>
@@ -210,5 +211,16 @@ document.addEventListener("DOMContentLoaded", () => {
   updateNavHighlight();
   window.addEventListener("scroll", updateNavHighlight);
 
-  displayBio();
+  displayBio().then(() => {
+    // Learn More button functionality - setup after bio is loaded
+    const learnMoreBtn = document.getElementById("learnMoreBtn");
+    const heroSection = document.getElementById("heroSection");
+
+    if (learnMoreBtn && heroSection) {
+      learnMoreBtn.addEventListener("click", () => {
+        heroSection.style.display = "block";
+        heroSection.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+  });
 });
