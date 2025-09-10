@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
           bioElement.innerHTML = `
             <div class="github-bio-container">
               <div class="github-bio-content">
-                <h3>Github</h3>
+                <h3>Mohammed Tijani</h3>
                 <p class="bio-text">${bioSummary}</p>
                 <a href="https://github.com/motijani" target="_blank" rel="noopener noreferrer" class="github-link">
                   View GitHub Profile
